@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/layout_aspect_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_aspect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_ugc_aspect_916" />
+
+        <TextView
+            android:id="@+id/tv_aspect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_aspect"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:text="9:16"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_aspect_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/layout_aspect_show"
+        app:layout_constraintRight_toLeftOf="@+id/layout_aspect_show"
+        android:visibility="gone"
+        android:showDividers="middle|end"
+        android:divider="@drawable/space_divider_horizontal_10"
+        tools:visibility="visible"
+        >
+
+        <TextView
+            android:id="@+id/iv_aspect_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_ugc_aspect_43"
+            android:text="4:3"
+            android:drawablePadding="2dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp"
+            />
+
+
+        <TextView
+            android:id="@+id/iv_aspect_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_ugc_aspect_34"
+            android:text="3:4"
+            android:drawablePadding="2dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/iv_aspect_third"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_ugc_aspect_11"
+            android:text="1:1"
+            android:drawablePadding="2dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/iv_aspect_fourth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_ugc_aspect_169"
+            android:text="16:9"
+            android:drawablePadding="2dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

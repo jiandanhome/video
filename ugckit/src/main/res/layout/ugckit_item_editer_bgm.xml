@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="horizontal"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/ic_cover"
+        android:layout_width="46dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="46dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_ugc_default_music" />
+
+    <FrameLayout
+        android:id="@+id/layout_use"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <com.tencent.qcloud.ugckit.component.progressbutton.SampleProgressButton
+            android:id="@+id/btn_use"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            app:sampleProgressButtonBackgroundColor="@color/app_ugckit_color_primary"
+            app:sampleProgressButtonForegroundColor="@color/app_ugckit_color_primary_dark"
+            app:sampleProgressButtonNormalColor="@color/app_ugckit_color_primary_dark"
+            app:sampleProgressButtonText="@string/ugckit_use"
+            app:sampleProgressButtonTextSize="12dp"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/bgm_tv_name"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toRightOf="@id/ic_cover"
+        app:layout_constraintRight_toLeftOf="@+id/layout_use"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="@id/ic_cover"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/tvAuthor"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/layout_use"
+        android:layout_toRightOf="@id/ic_cover"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:textColor="#333"
+        android:textSize="14dp"
+        tools:text="music name" />
+
+    <TextView
+        android:id="@+id/tvAuthor"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:textColor="#666"
+        android:text="邓紫棋"
+        app:layout_constraintTop_toBottomOf="@id/bgm_tv_name"
+        app:layout_constraintLeft_toLeftOf="@id/bgm_tv_name"
+        app:layout_constraintRight_toRightOf="@id/bgm_tv_name"
+        app:layout_constraintBottom_toBottomOf="@id/ic_cover"
+        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        app:layout_constraintTop_toBottomOf="@id/ic_cover"
+        android:layout_marginTop="10dp"
+        android:background="#e4e4e4"
+        ></View>
+</androidx.constraintlayout.widget.ConstraintLayout>

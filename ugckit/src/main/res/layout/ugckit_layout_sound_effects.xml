@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_alignParentBottom="true"
+    android:background="#CC000000"
+    android:clickable="false"
+    android:focusable="false"
+    android:paddingTop="20dp"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChangeVoice"
+        android:layout_width="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvReverbVoice"
+        android:layout_width="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:paddingLeft="20dp"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/beauty_tab"
+        android:layout_width="match_parent"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#fff"
+        android:layout_marginBottom="30dp"
+        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorColor="@android:color/transparent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp"
+        android:background="@android:color/transparent"
+        app:tabTextAppearance="@style/beautyTabText"
+        app:tabTextColor="#B3FFFFFF"
+        android:layout_height="wrap_content">
+    </com.google.android.material.tabs.TabLayout>
+
+
+</LinearLayout>
+

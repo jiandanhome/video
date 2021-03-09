@@ -1,0 +1,7 @@
+include ':video'
+include ':ugcvideoedit'
+include ':ugcvideorecord'
+include ':ugckit'
+include ':ugcbeautysettingkit'
+include ':app'
+rootProject.name = "ejuVideo"

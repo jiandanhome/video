@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingRight="20dp"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/filter_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_centerHorizontal="true"
+        android:background="@color/ugckit_transparent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/filter_image_tint"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="@+id/filter_image"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_image"
+        app:layout_constraintLeft_toLeftOf="@+id/filter_image"
+        app:layout_constraintRight_toRightOf="@+id/filter_image"
+        android:background="@drawable/ic_ugc_selected_mask"
+        android:visibility="invisible" />
+
+    <TextView
+        android:textSize="10sp"
+        android:id="@+id/filter_tv_name"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/filter_image"
+        app:layout_constraintRight_toRightOf="@id/filter_image"
+        app:layout_constraintTop_toBottomOf="@+id/filter_image"
+        android:gravity="center"
+        tools:text="1111"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filter_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/ugckit_white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
