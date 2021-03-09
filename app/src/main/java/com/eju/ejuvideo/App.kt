@@ -42,10 +42,14 @@ class App:Application() {
 
         })
 
+         val licenceKey="b95bf0cead8efcf49867daef712e942a"
+         val licenceUrl="http://license.vod2.myqcloud.com/license/v1/bc3914089ac22ecb967478125efabd44/TXUgcSDK.licence"
 
-        EjuVideo.init(this, {
+
+        EjuVideo.init(this,licenceUrl,licenceKey)
+        EjuVideo.setVideoProvider {
             Log.i("sck220", "onCreate: ${it}")
-        })
+        }
 
     }
 }

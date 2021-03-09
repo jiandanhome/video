@@ -10,16 +10,16 @@ import com.tencent.ugc.TXUGCBase
 
 object EjuVideo {
 
-    const val licenceKey="b95bf0cead8efcf49867daef712e942a"
-    const val licenceUrl="http://license.vod2.myqcloud.com/license/v1/bc3914089ac22ecb967478125efabd44/TXUgcSDK.licence"
 
-
-    fun init(context: Context, videoProvider:((videoPath:String)->Unit)) {
+    fun init(context: Context,licenceUrl:String,licenceKey:String) {
         UGCKit.init(context.applicationContext)
         TXUGCBase.getInstance().setLicence(context.applicationContext, licenceUrl, licenceKey)
-        VideoOutProvider.videoProvider={
-            videoProvider?.invoke(it)
-        }
+
+    }
+
+
+    fun setVideoProvider(videoProvider:(String)->Unit){
+        VideoOutProvider.videoProvider=videoProvider
     }
 
     fun startVideoRecord(context: Context){
