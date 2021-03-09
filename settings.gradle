@@ -1,4 +1,4 @@
-include ':video'
+include ':ugcvideo'
 include ':ugcvideoedit'
 include ':ugcvideorecord'
 include ':ugckit'
