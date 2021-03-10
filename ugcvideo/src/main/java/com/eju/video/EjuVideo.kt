@@ -3,6 +3,7 @@ package com.eju.video
 import androidx.fragment.app.Fragment
 import android.content.Context
 import android.content.Intent
+import com.tencent.liteav.demo.superplayer.TXVideoPlayerActivity
 import com.tencent.liteav.demo.videoediter.custom.VideoOutProvider
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity
 import com.tencent.qcloud.ugckit.UGCKit
@@ -17,7 +18,6 @@ object EjuVideo {
 
     }
 
-
     fun setVideoProvider(videoProvider:(String)->Unit){
         VideoOutProvider.videoProvider=videoProvider
     }
@@ -29,6 +29,12 @@ object EjuVideo {
     fun startVideoRecord(fragment: Fragment){
         fragment?.activity?.let {
             fragment.startActivity(Intent(it,TCVideoRecordActivity::class.java))
+        }
+    }
+
+    fun playVideo(context: Context,videoUrl:String?){
+        videoUrl?.let {
+            TXVideoPlayerActivity.open(context,it)
         }
     }
 

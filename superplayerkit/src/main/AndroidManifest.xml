@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tencent.liteav.demo.superplayer" >
+
+
+    <application>
+        <activity android:name=".TXVideoPlayerActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask"
+            >
+        </activity>
+    </application>
+</manifest>
