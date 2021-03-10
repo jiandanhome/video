@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:name=".App"
         android:theme="@style/Theme.EjuVideo">
-        <activity android:name=".MainActivity">
+        <activity android:name=".UgcVideoDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
