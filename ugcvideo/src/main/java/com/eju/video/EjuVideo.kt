@@ -3,6 +3,7 @@ package com.eju.video
 import androidx.fragment.app.Fragment
 import android.content.Context
 import android.content.Intent
+import com.eju.ugcvideojoin.UGCSelectVideoActivity
 import com.tencent.liteav.demo.superplayer.TXVideoPlayerActivity
 import com.tencent.liteav.demo.videoediter.custom.VideoOutProvider
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity
@@ -36,6 +37,10 @@ object EjuVideo {
         videoUrl?.let {
             TXVideoPlayerActivity.open(context,it)
         }
+    }
+
+    fun joinVideo(context: Context){
+        context.startActivity(Intent(context,UGCSelectVideoActivity::class.java))
     }
 
 }

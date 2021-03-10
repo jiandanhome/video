@@ -3,6 +3,8 @@ package com.tencent.qcloud.ugckit.utils;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
 /**
@@ -39,6 +41,18 @@ public class ScreenUtils {
     public static float sp2px(@NonNull Context context, float sp) {
         final float scale = context.getResources().getDisplayMetrics().scaledDensity;
         return sp * scale;
+    }
+
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
     }
 
 }

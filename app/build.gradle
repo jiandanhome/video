@@ -53,6 +53,8 @@ dependencies {
 
 
     implementation project(':ugcvideo')
+//    implementation 'com.github.jiandanhome:video:1.0.2'
+
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

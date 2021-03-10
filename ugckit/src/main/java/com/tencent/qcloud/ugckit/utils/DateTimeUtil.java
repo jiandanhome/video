@@ -1,5 +1,7 @@
 package com.tencent.qcloud.ugckit.utils;
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
@@ -35,7 +37,12 @@ public class DateTimeUtil {
         } else {
             ss = "" + s;
         }
-        formatTime = hs + ":" + ms + ":" + ss;
+        if(TextUtils.isEmpty(hs)||"00".equals(hs)){
+            formatTime =  ms + ":" + ss;
+        }else{
+            formatTime = hs + ":" + ms + ":" + ss;
+        }
+
         return formatTime;
     }
 

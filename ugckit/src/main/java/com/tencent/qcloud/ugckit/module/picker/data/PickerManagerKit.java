@@ -31,6 +31,49 @@ public class PickerManagerKit {
         mContentResolver = context.getApplicationContext().getContentResolver();
     }
 
+
+    @NonNull
+    public ArrayList<TCVideoFileInfo> getAllVideo(long maxDuration) {
+        ArrayList<TCVideoFileInfo> videos = new ArrayList<TCVideoFileInfo>();
+        String[] mediaColumns = new String[]{
+                MediaStore.Video.VideoColumns._ID,
+                //DATA 数据在 Android Q 以前代表了文件的路径，但在 Android Q上该路径无法被访问。
+                MediaStore.Video.VideoColumns.DATA,
+                MediaStore.Video.VideoColumns.DISPLAY_NAME,
+                MediaStore.Video.VideoColumns.DURATION
+        };
+        Cursor cursor = mContentResolver.query(mUri, mediaColumns, null, null, null);
+
+        if (cursor == null) return videos;
+
+        if (cursor.moveToFirst()) {
+            do {
+                long duration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+                if(duration<=0){
+                    continue;
+                }else if(duration>=maxDuration){
+                    continue;
+                }
+                TCVideoFileInfo fileItem = new TCVideoFileInfo();
+                // 兼容 Android 10以上
+                Uri uri = ContentUris.withAppendedId(
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI, cursor.getLong(cursor.getColumnIndexOrThrow((MediaStore.Video.Media._ID))));
+                fileItem.setFileUri(uri);
+                fileItem.setFilePath(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)));
+                fileItem.setFileName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)));
+                fileItem.setDuration(duration);
+
+                if (fileItem.getFileName() != null && fileItem.getFileName().endsWith(".mp4")) {
+                    videos.add(fileItem);
+                }
+                TXCLog.d(TAG, "fileItem = " + fileItem.toString());
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        return videos;
+    }
+
     @NonNull
     public ArrayList<TCVideoFileInfo> getAllVideo() {
         ArrayList<TCVideoFileInfo> videos = new ArrayList<TCVideoFileInfo>();

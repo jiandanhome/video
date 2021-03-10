@@ -21,4 +21,8 @@ class UgcVideoDemoActivity : AppCompatActivity() {
         "")
         EjuVideo.playVideo(this,urlList[0])
     }
+
+    fun select(view: View){
+        EjuVideo.joinVideo(this)
+    }
 }

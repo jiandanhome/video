@@ -24,4 +24,12 @@
         android:layout_height="wrap_content">
     </Button>
 
+    <Button
+        android:layout_width="match_parent"
+        android:text="join video"
+        android:textAllCaps="false"
+        android:onClick="select"
+        android:layout_height="wrap_content">
+    </Button>
+
 </LinearLayout>

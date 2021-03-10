@@ -1,3 +1,4 @@
+include ':ugcvideojoin'
 include ':superplayerkit'
 include ':ugcvideo'
 include ':ugcvideoedit'
