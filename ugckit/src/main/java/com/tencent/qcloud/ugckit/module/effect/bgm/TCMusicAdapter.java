@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.tencent.qcloud.ugckit.module.effect.BaseRecyclerAdapter;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.component.progressbutton.SampleProgressButton;
@@ -94,6 +96,9 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
         }
         TXLog.d(TAG, "onBindVH   info.status:" + info.status);
 
+
+        Glide.with(holder.ivCover).load(info.icon).centerCrop().placeholder(R.drawable.ic_ugc_default_music).into(holder.ivCover);
+        holder.tvAuthor.setText(info.author);
         holder.tvName.setText(info.name);
         holder.itemView.setTag(position);
         holder.setPosition(position);
@@ -104,12 +109,16 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
     public static class LinearMusicViewHolder extends RecyclerView.ViewHolder {
         private SampleProgressButton btnUse;
         private TextView tvName;
+        private ImageView ivCover;
+        private TextView tvAuthor;
         private OnItemClickListener onItemClickListener;
         private int position;
 
         public LinearMusicViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.bgm_tv_name);
+            tvAuthor = (TextView) itemView.findViewById(R.id.tvAuthor);
+            ivCover = (ImageView) itemView.findViewById(R.id.ic_cover);
             btnUse = (SampleProgressButton) itemView.findViewById(R.id.btn_use);
             btnUse.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/joiner_pb_loading"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintRight_toRightOf="@id/joiner_pb_loading"
         app:layout_constraintTop_toBottomOf="@id/joiner_pb_loading"
         app:layout_constraintBottom_toBottomOf="parent"

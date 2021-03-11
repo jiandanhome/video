@@ -2,11 +2,19 @@ package com.tencent.qcloud.ugckit.module.effect.bgm;
 
 import androidx.annotation.Nullable;
 
+import java.io.ObjectOutputStream;
+
 public class TCMusicInfo {
     public String name;
     public String url;
     public int    status = STATE_UNDOWNLOAD;
     public int    progress;
+
+    public String author;
+    public long duration;
+    public String icon;
+
+
     @Nullable
     public String localPath;
 

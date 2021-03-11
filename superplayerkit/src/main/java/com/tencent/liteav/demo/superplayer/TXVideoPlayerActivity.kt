@@ -40,6 +40,7 @@ class TXVideoPlayerActivity:AppCompatActivity() {
 
         })
 
+
     }
 
     override fun onBackPressed() {

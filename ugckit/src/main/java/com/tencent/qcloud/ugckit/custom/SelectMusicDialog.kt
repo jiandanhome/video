@@ -44,7 +44,7 @@ class SelectMusicDialog: BottomSheetDialogFragment(){
         setDialogStyle()
         intiAdapter()
         setListeners()
-        TCMusicManager.getInstance().loadMusicList()
+        TCMusicManager.getInstance().loadCustomMusicList()
     }
 
     private fun intiAdapter(){

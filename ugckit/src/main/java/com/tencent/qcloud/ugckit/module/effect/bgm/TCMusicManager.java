@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tencent.liteav.basic.log.TXCLog;
 import com.tencent.qcloud.ugckit.UGCKit;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
+import com.tencent.qcloud.ugckit.custom.MusicListProvider;
 import com.tencent.qcloud.ugckit.utils.TCHttpURLClient;
 
 import org.json.JSONArray;
@@ -36,6 +37,26 @@ public class TCMusicManager {
         return TCMusicMgrHolder.instance;
     }
 
+
+    public void loadCustomMusicList() {
+        if (isLoading) {
+            TXCLog.e(TAG, "loadMusicList, is loading");
+            return;
+        }
+        isLoading = true;
+        try {
+            ArrayList<TCMusicInfo> bgmInfoList = MusicListProvider.INSTANCE.getMusicList();
+            getLocalPath(bgmInfoList);
+            if (mLoadMusicListener != null) {
+                mLoadMusicListener.onBgmList(bgmInfoList);
+            }
+        } catch (Exception e) {
+            isLoading = false;
+        } finally {
+            isLoading = false;
+        }
+    }
+
     public void loadMusicList() {
         if (isLoading) {
             TXCLog.e(TAG, "loadMusicList, is loading");
@@ -56,6 +77,7 @@ public class TCMusicManager {
                     JSONArray list = bgmObject.getJSONArray("list");
                     Type listType = new TypeToken<ArrayList<TCMusicInfo>>() {
                     }.getType();
+
                     ArrayList<TCMusicInfo> bgmInfoList = new Gson().fromJson(list.toString(), listType);
 
                     getLocalPath(bgmInfoList);

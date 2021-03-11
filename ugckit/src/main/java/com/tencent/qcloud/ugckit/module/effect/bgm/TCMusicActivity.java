@@ -202,7 +202,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     @Override
     public void onRefresh() {
         TXCLog.i(TAG, "onRefresh");
-        TCMusicManager.getInstance().loadMusicList();
+        TCMusicManager.getInstance().loadCustomMusicList();
     }
 
     private void downloadMusicInfo(int position, @NonNull TCMusicInfo TCMusicInfo) {

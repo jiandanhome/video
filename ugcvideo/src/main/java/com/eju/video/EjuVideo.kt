@@ -8,10 +8,11 @@ import com.tencent.liteav.demo.superplayer.TXVideoPlayerActivity
 import com.tencent.liteav.demo.videoediter.custom.VideoOutProvider
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity
 import com.tencent.qcloud.ugckit.UGCKit
+import com.tencent.qcloud.ugckit.custom.MusicListProvider
+import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicInfo
 import com.tencent.ugc.TXUGCBase
 
 object EjuVideo {
-
 
     fun init(context: Context,licenceUrl:String,licenceKey:String) {
         UGCKit.init(context.applicationContext)
@@ -41,6 +42,11 @@ object EjuVideo {
 
     fun joinVideo(context: Context){
         context.startActivity(Intent(context,UGCSelectVideoActivity::class.java))
+    }
+
+    fun provideMusicList(list:List<TCMusicInfo>){
+        MusicListProvider.musicList.clear()
+        MusicListProvider.musicList.addAll(list)
     }
 
 }
