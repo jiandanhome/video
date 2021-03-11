@@ -1,13 +1,13 @@
 package com.eju.ugcvideojoin
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchUIUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.eju.ugcvideojoin.adapter.SelectedVideoAdapter
 import com.eju.ugcvideojoin.adapter.VideoAdapter
+import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
@@ -56,15 +56,21 @@ class UGCSelectVideoActivity:AppCompatActivity() {
     private fun setListeners() {
         ibBack.setOnClickListener { onBackPressed() }
         tvNext.setOnClickListener {
-            val selectedList=selectedVideoAdapter?.selectedVideoList?: emptyList()
+            val selectedList:ArrayList<TCVideoFileInfo> =selectedVideoAdapter?.selectedVideoList?: arrayListOf()
             if(selectedList.isNotEmpty()){
-                //todo
+                if(selectedList.size==1){
+                    //todo
+                }else{
+                    startActivity(Intent(this,UGCVideoJoinActivity::class.java)
+                        .putParcelableArrayListExtra(UGCKitConstants.INTENT_KEY_MULTI_CHOOSE,selectedList)
+                    )
+                }
             }
         }
     }
 
     private fun setViews(){
-        rvVideo.addItemDecoration(VideoLIstItemDecoration(ScreenUtils.dp2px(this,8F).toInt(), ScreenUtils.dp2px(this,3F).toInt()))
+        rvVideo.addItemDecoration(VideoListItemDecoration(ScreenUtils.dp2px(this,8F).toInt(), ScreenUtils.dp2px(this,3F).toInt()))
     }
 
     private fun setPadding(){
@@ -87,7 +93,7 @@ class UGCSelectVideoActivity:AppCompatActivity() {
             rvVideo.adapter=it
         }
 
-        selectedVideoAdapter= SelectedVideoAdapter(mutableListOf()).also {
+        selectedVideoAdapter= SelectedVideoAdapter(arrayListOf()).also {
             it.videoDeletedCallback={ video->
                 videoAdapter?.unSelect(video)
                 onSelectedChanged()

@@ -84,6 +84,14 @@ public class VideoWorkProgressFragment extends DialogFragment {
         return mViewContent;
     }
 
+    public void showAllowingStateLoss(FragmentManager fragmentManager){
+        if(fragmentManager == null || fragmentManager.isDestroyed()){
+            return;
+        }
+        fragmentManager.beginTransaction().add(this,getClass().getSimpleName()).commitAllowingStateLoss();
+    }
+
+
     @Override
     public void onStart() {
         super.onStart();

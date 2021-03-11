@@ -12,6 +12,12 @@
 
         </activity>
 
+        <activity android:name=".UGCVideoJoinActivity"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
+
     </application>
 
 </manifest>

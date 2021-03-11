@@ -11,8 +11,9 @@ import com.eju.ugcvideojoin.R
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
 import java.util.*
+import kotlin.collections.ArrayList
 
-class SelectedVideoAdapter(var selectedVideoList: MutableList<TCVideoFileInfo>): RecyclerView.Adapter<SelectedVideoAdapter.VideoHolder>() {
+class SelectedVideoAdapter(var selectedVideoList: ArrayList<TCVideoFileInfo>): RecyclerView.Adapter<SelectedVideoAdapter.VideoHolder>() {
 
     var videoDeletedCallback:((selectedVideo:TCVideoFileInfo)->Unit)?=null
 

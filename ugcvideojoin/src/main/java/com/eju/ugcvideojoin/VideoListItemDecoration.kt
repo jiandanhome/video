@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tencent.qcloud.ugckit.utils.ScreenUtils
 
-class VideoLIstItemDecoration(private val borderSpace:Int,private val dividerSpace:Int):RecyclerView.ItemDecoration(){
+class VideoListItemDecoration(private val borderSpace:Int, private val dividerSpace:Int):RecyclerView.ItemDecoration(){
 
 
     override fun getItemOffsets(
@@ -27,7 +27,6 @@ class VideoLIstItemDecoration(private val borderSpace:Int,private val dividerSpa
             var spanIndex=(view.layoutParams as GridLayoutManager.LayoutParams).spanIndex
             val left=getLeft(perSpaceWidth,spanCount,spanIndex)
             val right=perSpaceWidth-left
-            Log.i("sck220", "getItemOffsets: ${parent.getChildAdapterPosition(view)}  ${left}  ${right} ")
             outRect.left=left
             outRect.right=right
             outRect.bottom=dividerSpace
