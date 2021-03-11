@@ -59,6 +59,8 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
         }
         TXLog.d(TAG, "onBindVH   info.status:" + info.status);
 
+        Glide.with(holder.ivCover).load(info.icon).centerCrop().placeholder(R.drawable.ic_ugc_default_music).into(holder.ivCover);
+        holder.tvAuthor.setText(info.author);
         holder.tvName.setText(info.name);
         holder.itemView.setTag(position);
         holder.setPosition(position);

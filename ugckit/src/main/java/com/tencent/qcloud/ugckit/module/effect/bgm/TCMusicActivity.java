@@ -52,12 +52,6 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     }
 
     private void prepareToRefresh() {
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-            }
-        });
         this.onRefresh();
     }
 
@@ -77,8 +71,6 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
                             mTCMusicInfoList.addAll(tcBgmInfoList);
                         }
                         mTCMusicAdapter.notifyDataSetChanged();
-                        mSwipeRefreshLayout.setRefreshing(false);
-
                     }
                 });
             }
