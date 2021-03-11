@@ -299,7 +299,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     private void showGiveupRecordDialog() {
         Context context = getContext();
         if(context instanceof FragmentActivity){
-            UgcAlertDialog ugcAlertDialog=UgcAlertDialog.Companion.newInstance("您确定要退出当前录制?退出录制后，当前录制的片段会被删除");
+            UgcAlertDialog ugcAlertDialog=UgcAlertDialog.Companion.newInstance("您确定要退出当前录制?退出录制后，当前录制的片段会被删除",null,null);
             ugcAlertDialog.setLeftClickCallback(new Function0<Unit>() {
                 @Override
                 public Unit invoke() {
@@ -528,30 +528,31 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     }
 
     private void showDeleteMusicDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        AlertDialog alertDialog = builder.setTitle(getResources().getString(R.string.ugckit_tips)).setCancelable(false).setMessage(R.string.ugckit_delete_bgm_or_not)
-                .setPositiveButton(R.string.ugckit_confirm_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        dialog.dismiss();
-
-                        RecordMusicManager.getInstance().deleteMusic();
-                        // 录制添加BGM后是录制不了人声的，而音效是针对人声有效的
-                        getRecordRightLayout().setSoundEffectIconEnable(true);
+        Context context = getContext();
+        if(context instanceof FragmentActivity){
+            UgcAlertDialog ugcAlertDialog=UgcAlertDialog.Companion.newInstance("确定清除已添加的背景音乐？",null,null);
+            ugcAlertDialog.setLeftClickCallback(new Function0<Unit>() {
+                @Override
+                public Unit invoke() {
+                    return null;
+                }
+            });
+            ugcAlertDialog.setRightClickCallback(new Function0<Unit>() {
+                @Override
+                public Unit invoke() {
+                    RecordMusicManager.getInstance().deleteMusic();
+                    // 录制添加BGM后是录制不了人声的，而音效是针对人声有效的
+                    getRecordRightLayout().setSoundEffectIconEnable(true);
 
 //                        getRecordMusicPannel().setMusicName("");
-                        getRecordMusicPannel().setVisibility(View.GONE);
-                        getRecordBottomLayout().setVisibility(View.VISIBLE);
-                        getRecordRightLayout().setVisibility(View.VISIBLE);
-                    }
-                })
-                .setNegativeButton(getResources().getString(R.string.ugckit_btn_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).create();
-        alertDialog.show();
+                    getRecordMusicPannel().setVisibility(View.GONE);
+                    getRecordBottomLayout().setVisibility(View.VISIBLE);
+                    getRecordRightLayout().setVisibility(View.VISIBLE);
+                    return null;
+                }
+            });
+            ugcAlertDialog.showAllowingStateLoss(((FragmentActivity) context).getSupportFragmentManager());
+        }
     }
 
     /************************************   音乐Pannel回调接口 End    ********************************************/

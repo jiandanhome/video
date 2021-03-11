@@ -17,10 +17,12 @@ class UgcAlertDialog: DialogFragment() {
     var rightClickCallback:(()->Unit)?=null
 
     companion object{
-        fun newInstance(content: String):UgcAlertDialog {
+        fun newInstance(content: String,leftText:String?=null,rightText:String?=null):UgcAlertDialog {
             return UgcAlertDialog().apply {
                 arguments=Bundle().apply {
                     putString("content", content)
+                    putString("leftText", leftText)
+                    putString("rightText", rightText)
                 }
             }
         }
@@ -41,6 +43,15 @@ class UgcAlertDialog: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvContent.text=arguments?.getString("content")
+        val leftText=arguments?.getString("leftText")
+        if(!leftText.isNullOrEmpty()){
+            tvLeft.text=leftText
+        }
+        val rightText=arguments?.getString("rightText")
+        if(!rightText.isNullOrEmpty()){
+            tvRight.text=rightText
+        }
+
         tvLeft.setOnClickListener {
             leftClickCallback?.invoke()
             dismissAllowingStateLoss()

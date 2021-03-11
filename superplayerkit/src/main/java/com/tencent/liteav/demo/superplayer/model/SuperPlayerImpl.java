@@ -196,6 +196,9 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
                     seek(mSeekPos);
                     mChangeHWAcceleration = false;
                 }
+                if(mObserver!=null){
+                    mObserver.onStartFirstFrame();
+                }
                 break;
             case TXLiveConstants.PLAY_EVT_PLAY_END:
                 updatePlayerState(SuperPlayerDef.PlayerState.END);

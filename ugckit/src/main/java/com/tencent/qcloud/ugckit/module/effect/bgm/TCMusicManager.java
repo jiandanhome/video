@@ -39,6 +39,10 @@ public class TCMusicManager {
 
 
     public void loadCustomMusicList() {
+        if(MusicListProvider.INSTANCE.getMusicList().isEmpty()){
+            loadMusicList();
+            return;
+        }
         if (isLoading) {
             TXCLog.e(TAG, "loadMusicList, is loading");
             return;

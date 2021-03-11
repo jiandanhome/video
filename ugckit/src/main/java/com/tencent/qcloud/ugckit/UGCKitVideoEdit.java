@@ -112,7 +112,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
     public void backPressed() {
         Context context = getContext();
         if(context instanceof FragmentActivity){
-            UgcAlertDialog ugcAlertDialog=UgcAlertDialog.Companion.newInstance("您确定要放弃当前编辑?");
+            UgcAlertDialog ugcAlertDialog=UgcAlertDialog.Companion.newInstance("您确定要放弃当前编辑?",null,null);
             ugcAlertDialog.setLeftClickCallback(new Function0<Unit>() {
                 @Override
                 public Unit invoke() {

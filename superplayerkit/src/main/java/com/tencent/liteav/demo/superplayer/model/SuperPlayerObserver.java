@@ -39,6 +39,8 @@ public abstract class SuperPlayerObserver {
      */
     public void onPlayProgress(long current, long duration) {}
 
+    public void onStartFirstFrame(){}
+
     public void onSeek(int position) {}
 
     public void onSwitchStreamStart(boolean success, SuperPlayerDef.PlayerType playerType, VideoQuality quality){}

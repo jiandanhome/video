@@ -1,6 +1,7 @@
 package com.tencent.qcloud.ugckit.module.effect.bgm;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,8 +19,10 @@ import android.view.ViewGroup;
 
 
 import com.tencent.qcloud.ugckit.custom.SelectMusicDialog;
+import com.tencent.qcloud.ugckit.custom.UgcAlertDialog;
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK;
 import com.tencent.qcloud.ugckit.module.effect.utils.EffectEditer;
+import com.tencent.qcloud.ugckit.module.record.RecordMusicManager;
 import com.tencent.qcloud.ugckit.utils.DialogUtil;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.R;
@@ -194,26 +198,26 @@ public class TCMusicSettingFragment extends Fragment {
     }
 
     private void showDeleteMusicDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        AlertDialog alertDialog = builder.setTitle(getResources().getString(R.string.ugckit_tips)).setCancelable(false).setMessage(R.string.ugckit_delete_bgm_or_not)
-                .setPositiveButton(R.string.ugckit_confirm_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        DraftEditer.getInstance().setBgmPath(null);
-                        EffectEditer.getInstance().setBgmPath(null);
-                        VideoEditerSDK.getInstance().getEditer().setBGM(null);
+        UgcAlertDialog ugcAlertDialog=UgcAlertDialog.Companion.newInstance("确定清除已添加的背景音乐？",null,null);
+        ugcAlertDialog.setLeftClickCallback(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                return null;
+            }
+        });
+        ugcAlertDialog.setRightClickCallback(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                DraftEditer.getInstance().setBgmPath(null);
+                EffectEditer.getInstance().setBgmPath(null);
+                VideoEditerSDK.getInstance().getEditer().setBGM(null);
 
-                        getActivity().onBackPressed();
-                        dialog.dismiss();
-                    }
-                })
-                .setNegativeButton(getResources().getString(R.string.ugckit_btn_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).create();
-        alertDialog.show();
+                getActivity().onBackPressed();
+                return null;
+            }
+        });
+        ugcAlertDialog.showAllowingStateLoss(getChildFragmentManager());
+
     }
 
 

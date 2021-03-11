@@ -26,6 +26,10 @@ class TXVideoPlayerActivity:AppCompatActivity() {
 
     private fun setListeners() {
         superPlayerView.setPlayerViewCallback(object: SuperPlayerView.OnSuperPlayerViewCallback {
+            override fun onStartPlayFirstFrame() {
+                pbLoading.visibility=View.GONE
+            }
+
             override fun onStartFullScreenPlay() {
             }
             override fun onStopFullScreenPlay() {

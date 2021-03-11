@@ -53,7 +53,7 @@ dependencies {
 
 
     implementation project(':ugcvideo')
-//    implementation 'com.github.jiandanhome:video:1.0.2'
+//    implementation 'com.github.jiandanhome:video:1.0.4'
 
 
     testImplementation 'junit:junit:4.+'

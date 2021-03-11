@@ -610,6 +610,8 @@ public class SuperPlayerView extends RelativeLayout {
      */
     public interface OnSuperPlayerViewCallback {
 
+        void onStartPlayFirstFrame();
+
         /**
          * 开始全屏播放
          */
@@ -682,6 +684,15 @@ public class SuperPlayerView extends RelativeLayout {
     }
 
     private SuperPlayerObserver mSuperPlayerObserver = new SuperPlayerObserver() {
+
+        @Override
+        public void onStartFirstFrame() {
+            super.onStartFirstFrame();
+            if(mPlayerViewCallback!=null){
+                mPlayerViewCallback.onStartPlayFirstFrame();
+            }
+        }
+
         @Override
         public void onPlayBegin(String name) {
             mWindowPlayer.updatePlayState(SuperPlayerDef.PlayerState.PLAYING);

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
 
         Glide.with(holder.ivCover).load(info.icon).centerCrop().placeholder(R.drawable.ic_ugc_default_music).into(holder.ivCover);
         holder.tvAuthor.setText(info.author);
+        holder.tvAuthor.setVisibility(TextUtils.isEmpty(info.author)?View.GONE:View.VISIBLE);
         holder.tvName.setText(info.name);
         holder.itemView.setTag(position);
         holder.setPosition(position);
@@ -101,6 +103,7 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
 
         Glide.with(holder.ivCover).load(info.icon).centerCrop().placeholder(R.drawable.ic_ugc_default_music).into(holder.ivCover);
         holder.tvAuthor.setText(info.author);
+        holder.tvAuthor.setVisibility(TextUtils.isEmpty(info.author)?View.GONE:View.VISIBLE);
         holder.tvName.setText(info.name);
         holder.itemView.setTag(position);
         holder.setPosition(position);

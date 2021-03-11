@@ -23,7 +23,7 @@
         android:id="@+id/ibDelete"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/ic_ugckit_delete"
+        android:src="@drawable/ic_ugckit_delete_video_x"
         android:background="@null"
         android:layout_width="16dp"
         android:layout_height="16dp">
