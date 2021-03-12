@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:justifyContent="space_evenly"
+    app:alignItems="center"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="#000"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv0"
+        android:layout_width="wrap_content"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:text="变声"
+        android:layout_height="wrap_content">
+    </TextView>
+
+
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:textColor="#B3FFFFFF"
+        android:text="混响"
+        android:layout_height="wrap_content">
+    </TextView>
+
+
+</com.google.android.flexbox.FlexboxLayout>

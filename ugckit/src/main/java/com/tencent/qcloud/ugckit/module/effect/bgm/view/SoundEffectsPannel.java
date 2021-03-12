@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 
 import com.google.android.material.tabs.TabLayout;
+import com.tencent.liteav.demo.beauty.UGCTabLayout;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.module.record.interfaces.ISoundEffectsPannel;
 import com.tencent.ugc.TXRecordCommon;
@@ -28,12 +29,15 @@ import com.tencent.ugc.TXRecordCommon;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+
 /**
  * 音效Pannel
  */
 public class SoundEffectsPannel extends FrameLayout implements ISoundEffectsPannel, SeekBar.OnSeekBarChangeListener {
 
-    private TabLayout mTabLayout;
+    private UGCTabLayout mTabLayout;
     private RecyclerView rvChangeVoice;
     private RecyclerView rvReverbVoice;
 
@@ -57,30 +61,23 @@ public class SoundEffectsPannel extends FrameLayout implements ISoundEffectsPann
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.ugckit_layout_sound_effects, this);
 
-        mTabLayout = (TabLayout) findViewById(R.id.beauty_tab);
-        mTabLayout.addTab(mTabLayout.newTab().setText("变声"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("混响"));
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position=tab.getPosition();
-                if(position==0){
-                    rvChangeVoice.setVisibility(View.VISIBLE);
-                    rvReverbVoice.setVisibility(View.GONE);
-                }else if(position==1){
-                    rvChangeVoice.setVisibility(View.GONE);
-                    rvReverbVoice.setVisibility(View.VISIBLE);
-                }
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+        mTabLayout=findViewById(R.id.beauty_tab);
 
+        List<String> titles=new ArrayList<>();
+        titles.add("变声");
+        titles.add("混响");
+        mTabLayout.setData(titles);
+        mTabLayout.setOnTabChangedCallback(position -> {
+            if(position==0){
+                rvChangeVoice.setVisibility(View.VISIBLE);
+                rvReverbVoice.setVisibility(View.GONE);
+            }else if(position==1){
+                rvChangeVoice.setVisibility(View.GONE);
+                rvReverbVoice.setVisibility(View.VISIBLE);
             }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            return null;
         });
+
 
         rvChangeVoice = (RecyclerView) findViewById(R.id.rvChangeVoice);
         rvReverbVoice = (RecyclerView) findViewById(R.id.rvReverbVoice);

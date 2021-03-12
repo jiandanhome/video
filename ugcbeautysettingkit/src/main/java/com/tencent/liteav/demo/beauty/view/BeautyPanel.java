@@ -7,26 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.tabs.TabLayout;
 import com.tencent.liteav.beauty.TXBeautyManager;
 import com.tencent.liteav.demo.beauty.R;
 import com.tencent.liteav.demo.beauty.Beauty;
 import com.tencent.liteav.demo.beauty.BeautyImpl;
 import com.tencent.liteav.demo.beauty.adapter.ItemAdapter;
-import com.tencent.liteav.demo.beauty.adapter.TabAdapter;
-import com.tencent.liteav.demo.beauty.constant.BeautyConstants;
 import com.tencent.liteav.demo.beauty.model.BeautyInfo;
 import com.tencent.liteav.demo.beauty.model.ItemInfo;
 import com.tencent.liteav.demo.beauty.model.TabInfo;
-import com.tencent.liteav.demo.beauty.utils.BeautyUtils;
-import com.tencent.liteav.demo.beauty.utils.ResourceUtils;
+import com.tencent.liteav.demo.beauty.UGCTabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 美颜面板控件 View
@@ -42,7 +40,7 @@ public class BeautyPanel extends FrameLayout implements SeekBar.OnSeekBarChangeL
 
     private Context                 mContext;
 
-    private TabLayout               mTabView;
+    private UGCTabLayout               mTabView;
     private TCHorizontalScrollView  mScrollItemView;
     private LinearLayout            mRelativeSeekBarLayout;
     private SeekBar                 mSeekBarLevel;
@@ -216,7 +214,7 @@ public class BeautyPanel extends FrameLayout implements SeekBar.OnSeekBarChangeL
         mTextLevelValue = (TextView) findViewById(R.id.beauty_tv_seek_bar_value);
         mSeekBarLevel.setOnSeekBarChangeListener(this);
 
-        mTabView = (TabLayout) findViewById(R.id.beauty_tab);
+        mTabView = (UGCTabLayout) findViewById(R.id.beauty_tab);
         mScrollItemView = (TCHorizontalScrollView) findViewById(R.id.beauty_horizontal_picker_second);
     }
 
@@ -242,33 +240,26 @@ public class BeautyPanel extends FrameLayout implements SeekBar.OnSeekBarChangeL
     }
 
     private void createTabList() {
-        mTabView.removeAllTabs();
-        mTabView.addTab(mTabView.newTab().setText("美颜"));
-        mTabView.addTab(mTabView.newTab().setText("滤镜"));
-        mTabView.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position=tab.getPosition();
-                TabInfo tabInfo=mBeautyInfo.getBeautyTabList().get(position);
-                mCurrentTabInfo = tabInfo;
-                mCurrentTabPosition = position;
-                createItemList(tabInfo, position);
-                if (mOnBeautyListener != null) {
-                    mOnBeautyListener.onTabChange(tabInfo, position);
-                }
+        List<String> titles=new ArrayList<>();
+        titles.add("美颜");
+        titles.add("滤镜");
+        mTabView.setData(titles);
+        mTabView.setOnTabChangedCallback(position -> {
+            TabInfo tabInfo=mBeautyInfo.getBeautyTabList().get(position);
+            mCurrentTabInfo = tabInfo;
+            mCurrentTabPosition = position;
+            createItemList(tabInfo, position);
+            if (mOnBeautyListener != null) {
+                mOnBeautyListener.onTabChange(tabInfo, position);
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
+            return null;
         });
+
         TabInfo tabInfo = mBeautyInfo.getBeautyTabList().get(0);
         mCurrentTabInfo = tabInfo;
         mCurrentTabPosition = 0;
         createItemList(tabInfo, 0);
+
     }
 
     private void createItemList(@NonNull final TabInfo tabInfo, @NonNull final int tabPosition) {

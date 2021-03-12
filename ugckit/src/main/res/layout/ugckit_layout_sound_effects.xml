@@ -36,22 +36,16 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
-    <com.google.android.material.tabs.TabLayout
+    <com.tencent.liteav.demo.beauty.UGCTabLayout
         android:id="@+id/beauty_tab"
         android:layout_width="match_parent"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="#fff"
         android:layout_marginBottom="30dp"
-        app:tabIndicatorHeight="0dp"
-        app:tabIndicatorColor="@android:color/transparent"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="85dp"
         android:layout_marginRight="85dp"
         android:background="@android:color/transparent"
-        app:tabTextAppearance="@style/beautyTabText"
-        app:tabTextColor="#B3FFFFFF"
         android:layout_height="wrap_content">
-    </com.google.android.material.tabs.TabLayout>
+    </com.tencent.liteav.demo.beauty.UGCTabLayout>
 
 
 </LinearLayout>
