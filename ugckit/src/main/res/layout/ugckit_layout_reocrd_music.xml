@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -23,7 +24,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="marquee"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:gravity="left|center_vertical"
             android:marqueeRepeatLimit="marquee_forever"
             android:paddingLeft="20dp"
@@ -36,30 +37,37 @@
             android:textColor="@color/ugckit_white" />
 
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rl_bgm_operation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="right">
+
+
         <TextView
             android:id="@+id/btn_bgm_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:paddingLeft="14dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="18dp"
             android:layout_marginLeft="20dp"
-            android:paddingRight="14dp"
+            android:paddingRight="18dp"
             android:background="@drawable/bg_ugc_common_btn"
             android:gravity="center"
             android:textSize="12sp"
             android:text="@string/ugckit_btn_ok"
             android:textColor="@color/ugckit_white" />
-    </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_bgm_operation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="right">
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            ></View>
 
         <TextView
             android:id="@+id/btn_bgm_replace"
@@ -88,7 +96,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_ugc_delete"
             />
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

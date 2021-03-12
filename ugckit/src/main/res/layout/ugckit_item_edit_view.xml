@@ -3,25 +3,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:seekbar="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/ugckit_item_thumb_height">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:layout_height="40dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        android:layout_marginLeft="@dimen/ugckit_cut_margin"
-        android:layout_marginRight="@dimen/ugckit_cut_margin" />
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp" />
 
     <com.tencent.qcloud.ugckit.component.slider.RangeSlider
         android:id="@+id/range_slider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        seekbar:leftThumbDrawable="?attr/editerCutSliderLeftIcon"
+        seekbar:leftThumbDrawable="@drawable/ic_ugckit_music_left_white"
         seekbar:leftThumbIndex="0"
-        seekbar:lineColor="?attr/editerCutViewColor"
-        seekbar:lineHeight="3dp"
-        seekbar:rightThumbDrawable="?attr/editerCutSliderRightIcon"
-        seekbar:thumbWidth="10dp"
+        seekbar:lineColor="@android:color/transparent"
+        seekbar:lineHeight="1px"
+        seekbar:rightThumbDrawable="@drawable/ic_ugckit_music_right_white"
+        seekbar:thumbWidth="12dp"
         seekbar:tickCount="100" />
 </RelativeLayout>

@@ -3,7 +3,7 @@
     android:id="@+id/rlContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3b3e45">
+    android:background="#fff">
 
     <FrameLayout
         android:id="@+id/layout_top"
@@ -18,7 +18,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:padding="15dp"
-            android:tint="@color/app_ugckit_color_primary"
+            android:tint="#333"
             android:src="@drawable/ugckit_btn_back_no_shaddow" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/ugckit_select_bgm"
-            android:textColor="#fff"
+            android:textColor="#333"
             android:textSize="16sp" />
 
         <View

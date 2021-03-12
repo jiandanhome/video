@@ -24,7 +24,7 @@ public class VideoCutLayout extends RelativeLayout implements IVideoCutLayout, V
     private static final String TAG = "VideoCutLayout";
 
     private FragmentActivity mActivity;
-    private ImageView        mImageRotate;
+    private TextView        mImageRotate;
     private TextView         mTextDuration;
     private VideoCutView     mVideoCutView;
 
@@ -52,7 +52,7 @@ public class VideoCutLayout extends RelativeLayout implements IVideoCutLayout, V
         inflate(mActivity, R.layout.ugckit_video_cut_kit, this);
 
         mTextDuration = (TextView) findViewById(R.id.tv_choose_duration);
-        mImageRotate = (ImageView) findViewById(R.id.iv_rotate);
+        mImageRotate = (TextView) findViewById(R.id.iv_rotate);
         mVideoCutView = (VideoCutView) findViewById(R.id.video_edit_view);
 
         mImageRotate.setOnClickListener(this);

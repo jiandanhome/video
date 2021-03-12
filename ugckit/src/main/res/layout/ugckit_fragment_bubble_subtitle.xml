@@ -11,7 +11,7 @@
         android:padding="10dp"
         android:layout_marginRight="5dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toTopOf="@+id/llRv"
         android:src="?attr/editerSubtitleDelIcon" />
 

@@ -108,7 +108,7 @@ public class VideoCutView extends RelativeLayout implements RangeSlider.OnRangeC
         mAdapter = new TCVideoEditerAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
 
-        mSingleWidth = mContext.getResources().getDimensionPixelOffset(R.dimen.ugckit_item_thumb_height);
+        mSingleWidth = mContext.getResources().getDimensionPixelOffset(R.dimen.ugckit_video_thumbnail_width);
     }
 
     /**

@@ -26,7 +26,7 @@ public class TCVideoEditerAdapter extends RecyclerView.Adapter<TCVideoEditerAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int height = mContext.getResources().getDimensionPixelOffset(R.dimen.ugckit_item_thumb_height);
+        int height = mContext.getResources().getDimensionPixelOffset(R.dimen.ugckit_video_thumbnail_width);
         ImageView view = new ImageView(parent.getContext());
         view.setLayoutParams(new ViewGroup.LayoutParams(height, height));
         view.setScaleType(ImageView.ScaleType.CENTER_CROP);
