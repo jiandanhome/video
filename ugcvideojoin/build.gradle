@@ -34,6 +34,7 @@ dependencies {
     implementation rootProject.ext.dependencies["core-ktx"]
 
     implementation project(':ugckit')
+    implementation project(':ugcvideoedit')
 
     implementation rootProject.ext.dependencies["liteav"]
     implementation rootProject.ext.dependencies["glide"]

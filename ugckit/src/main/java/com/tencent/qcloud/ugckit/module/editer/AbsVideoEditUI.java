@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import com.tencent.qcloud.ugckit.module.cut.VideoPlayLayout;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.component.TitleBarLayout;
+import com.tencent.qcloud.ugckit.utils.ScreenUtils;
 
 public abstract class AbsVideoEditUI extends RelativeLayout implements IVideoEditKit {
 
@@ -32,6 +33,7 @@ public abstract class AbsVideoEditUI extends RelativeLayout implements IVideoEdi
         inflate(getContext(), R.layout.ugckit_video_edit_layout, this);
 
         mLayoutTitleBar = (TitleBarLayout) findViewById(R.id.titleBar_layout);
+        ScreenUtils.setMarginTop(mLayoutTitleBar);
         mLayoutVideoPlay = (VideoPlayLayout) findViewById(R.id.video_play_layout);
     }
 

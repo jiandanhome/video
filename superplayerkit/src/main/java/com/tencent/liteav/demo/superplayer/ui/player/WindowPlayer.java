@@ -21,6 +21,7 @@ import com.tencent.liteav.demo.superplayer.model.utils.VideoGestureDetector;
 import com.tencent.liteav.demo.superplayer.ui.view.PointSeekBar;
 import com.tencent.liteav.demo.superplayer.ui.view.VideoProgressLayout;
 import com.tencent.liteav.demo.superplayer.ui.view.VolumeBrightnessProgressLayout;
+import com.tencent.qcloud.ugckit.utils.ScreenUtils;
 
 /**
  * 窗口模式播放控件
@@ -193,6 +194,7 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener,
         LayoutInflater.from(context).inflate(R.layout.superplayer_vod_player_window, this);
 
         mLayoutTop = (LinearLayout) findViewById(R.id.superplayer_rl_top);
+        ScreenUtils.setMarginTop(mLayoutTop);
         mLayoutTop.setOnClickListener(this);
         mLayoutBottom = (LinearLayout) findViewById(R.id.superplayer_ll_bottom);
         mLayoutBottom.setOnClickListener(this);

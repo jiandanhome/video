@@ -19,6 +19,7 @@ import com.tencent.qcloud.ugckit.module.effect.motion.TCMotionFragment;
 import com.tencent.qcloud.ugckit.module.effect.paster.TCPasterFragment;
 import com.tencent.qcloud.ugckit.module.effect.paster.view.PasterPannel;
 import com.tencent.qcloud.ugckit.module.effect.time.TCTimeFragment;
+import com.tencent.qcloud.ugckit.utils.ScreenUtils;
 
 public abstract class AbsVideoEffectUI extends RelativeLayout implements IVideoEffectKit {
     private TitleBarLayout           mTitleBar;
@@ -85,6 +86,8 @@ public abstract class AbsVideoEffectUI extends RelativeLayout implements IVideoE
 
     private void initViews() {
         inflate(getContext(), R.layout.ugckit_video_eff_layout, this);
+
+        ScreenUtils.setPaddingTop(findViewById(R.id.rlContent));
 
         mTitleBar = (TitleBarLayout) findViewById(R.id.titleBar_layout);
         mVideoPlayLayout = (VideoPlayLayout) findViewById(R.id.video_play_layout);

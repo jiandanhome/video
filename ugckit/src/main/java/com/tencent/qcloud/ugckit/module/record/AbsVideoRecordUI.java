@@ -12,6 +12,7 @@ import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.component.TitleBarLayout;
 
 import com.tencent.qcloud.ugckit.module.record.interfaces.IVideoRecordKit;
+import com.tencent.qcloud.ugckit.utils.ScreenUtils;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
 public abstract class AbsVideoRecordUI extends RelativeLayout implements IVideoRecordKit {
@@ -45,6 +46,7 @@ public abstract class AbsVideoRecordUI extends RelativeLayout implements IVideoR
         inflate(getContext(), R.layout.ugckit_video_rec_layout, this);
 
         mTitleBar = (TitleBarLayout) findViewById(R.id.titleBar_layout);
+        ScreenUtils.setMarginTop(mTitleBar);
         mVideoView = (TXCloudVideoView) findViewById(R.id.video_view);
 
         mRecordRightLayout = (RecordRightLayout) findViewById(R.id.record_right_layout);

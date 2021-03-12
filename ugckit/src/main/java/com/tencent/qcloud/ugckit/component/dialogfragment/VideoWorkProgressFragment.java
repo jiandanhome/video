@@ -54,6 +54,8 @@ public class VideoWorkProgressFragment extends DialogFragment {
             savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
+        getDialog().setCancelable(false);
+        getDialog().setCanceledOnTouchOutside(false);
         mViewContent = inflater.inflate(R.layout.ugckit_layout_joiner_progress, null);
         mTextTips = (TextView) mViewContent.findViewById(R.id.joiner_tv_msg);
         Bundle bundle = getArguments();

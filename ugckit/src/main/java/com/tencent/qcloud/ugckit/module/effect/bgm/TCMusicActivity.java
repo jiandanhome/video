@@ -22,6 +22,7 @@ import com.tencent.liteav.basic.log.TXCLog;
 
 import com.tencent.qcloud.ugckit.utils.BackgroundTasks;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
+import com.tencent.qcloud.ugckit.utils.ScreenUtils;
 import com.tencent.qcloud.ugckit.utils.ToastUtil;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.component.progressbutton.SampleProgressButton;
@@ -45,6 +46,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ugckit_activity_bgm_select);
+        ScreenUtils.setPaddingTop(findViewById(R.id.rlContent));
         initData();
         initView();
         initListener();

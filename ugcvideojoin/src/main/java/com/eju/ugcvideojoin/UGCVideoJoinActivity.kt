@@ -1,10 +1,13 @@
 package com.eju.ugcvideojoin
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.tencent.liteav.demo.videoediter.TCVideoCutActivity
 import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.component.dialogfragment.VideoWorkProgressFragment
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo
@@ -46,7 +49,10 @@ class UGCVideoJoinActivity :AppCompatActivity(){
             override fun onPreviewProgress(p0: Int) {
             }
             override fun onPreviewFinished() {
-                mTXVideoJoiner?.startPlay()
+                try {
+                    mTXVideoJoiner?.startPlay()
+                } catch (e: Exception) {
+                }
             }
         })
         mTXVideoJoiner?.initWithPreview(param)
@@ -79,7 +85,10 @@ class UGCVideoJoinActivity :AppCompatActivity(){
             override fun onJoinComplete(p0: TXVideoEditConstants.TXJoinerResult?) {
                 hideProgress()
                 if (p0?.retCode == TXVideoEditConstants.JOIN_RESULT_OK) {
-                    Log.i("sck220", "onJoinComplete: ${videoOutputPath}")
+                    startActivity(Intent(this@UGCVideoJoinActivity,TCVideoCutActivity::class.java)
+                        .putExtra(UGCKitConstants.VIDEO_PATH,videoOutputPath)
+                        .putExtra(UGCKitConstants.VIDEO_URI, Uri.parse(videoOutputPath).toString())
+                    )
                 } else {
                     Toast.makeText(this@UGCVideoJoinActivity, "视频合成失败 ${p0?.descMsg}", Toast.LENGTH_SHORT).show()
                 }

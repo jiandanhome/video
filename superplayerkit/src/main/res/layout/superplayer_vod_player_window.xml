@@ -9,7 +9,6 @@
         android:id="@+id/superplayer_rl_top"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/superplayer_media_controller_view_height"
-        android:layout_marginTop="35dp"
         android:gravity="left"
         android:orientation="horizontal">
 

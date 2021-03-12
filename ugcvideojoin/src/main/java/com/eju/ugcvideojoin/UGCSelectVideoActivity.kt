@@ -1,8 +1,13 @@
 package com.eju.ugcvideojoin
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.eju.ugcvideojoin.adapter.SelectedVideoAdapter
@@ -22,21 +27,26 @@ class UGCSelectVideoActivity:AppCompatActivity() {
 
     private var selectedVideoAdapter: SelectedVideoAdapter?=null
 
-    private val itemTouchHelper=ItemTouchHelper(object:ItemTouchHelper.Callback(){
+    private val itemTouchHelper=ItemTouchHelper(object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
         ): Int {
-            return makeMovementFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,0)
+            return makeMovementFlags(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                0
+            )
         }
+
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            selectedVideoAdapter?.swapItem(viewHolder.adapterPosition,target.adapterPosition)
+            selectedVideoAdapter?.swapItem(viewHolder.adapterPosition, target.adapterPosition)
             return true
         }
+
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         }
 
@@ -50,8 +60,49 @@ class UGCSelectVideoActivity:AppCompatActivity() {
         setViews()
         setPadding()
         setAdapter()
-        queryVideoList()
+        checkPermission()
     }
+
+    private fun checkPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val permissions = arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            val mPermissionList: MutableList<String> = java.util.ArrayList()
+            for (i in permissions.indices) {
+                if (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+                    mPermissionList.add(permissions[i])
+                }
+            }
+            if (mPermissionList.isEmpty()) {
+                queryVideoList()
+            } else {
+                //存在未允许的权限
+                val permissionsArr = mPermissionList.toTypedArray()
+                ActivityCompat.requestPermissions(this, permissionsArr, 11)
+            }
+        } else {
+            //FIXBUG:Android6.0以下不需要动态获取权限
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                queryVideoList()
+            }
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+        var forbidden = false
+        for (i in grantResults.indices) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                forbidden = true
+            }
+        }
+        if (!forbidden) {
+            queryVideoList()
+        }
+    }
+
 
     private fun setListeners() {
         ibBack.setOnClickListener { onBackPressed() }
@@ -61,8 +112,12 @@ class UGCSelectVideoActivity:AppCompatActivity() {
                 if(selectedList.size==1){
                     //todo
                 }else{
-                    startActivity(Intent(this,UGCVideoJoinActivity::class.java)
-                        .putParcelableArrayListExtra(UGCKitConstants.INTENT_KEY_MULTI_CHOOSE,selectedList)
+                    startActivity(
+                        Intent(this, UGCVideoJoinActivity::class.java)
+                            .putParcelableArrayListExtra(
+                                UGCKitConstants.INTENT_KEY_MULTI_CHOOSE,
+                                selectedList
+                            )
                     )
                 }
             }
@@ -70,11 +125,18 @@ class UGCSelectVideoActivity:AppCompatActivity() {
     }
 
     private fun setViews(){
-        rvVideo.addItemDecoration(VideoListItemDecoration(ScreenUtils.dp2px(this,8F).toInt(), ScreenUtils.dp2px(this,3F).toInt()))
+        rvVideo.addItemDecoration(
+            VideoListItemDecoration(
+                ScreenUtils.dp2px(this, 8F).toInt(), ScreenUtils.dp2px(
+                    this,
+                    3F
+                ).toInt()
+            )
+        )
     }
 
     private fun setPadding(){
-        clContent.setPadding(0,ScreenUtils.getStatusBarHeight(this),0,0)
+        clContent.setPadding(0, ScreenUtils.getStatusBarHeight(this), 0, 0)
         clBottom.post {
             rvVideo.setPadding(0, 0, 0, clBottom.height)
         }

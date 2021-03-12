@@ -27,6 +27,7 @@ import com.tencent.liteav.demo.superplayer.model.entity.VideoQuality;
 import com.tencent.liteav.demo.superplayer.ui.view.VodMoreView;
 import com.tencent.liteav.demo.superplayer.ui.view.VodQualityView;
 import com.tencent.liteav.demo.superplayer.ui.view.VolumeBrightnessProgressLayout;
+import com.tencent.qcloud.ugckit.utils.ScreenUtils;
 import com.tencent.rtmp.TXImageSprite;
 
 import java.lang.ref.WeakReference;
@@ -236,8 +237,8 @@ public class FullScreenPlayer extends AbsPlayer implements View.OnClickListener,
     private void initView(Context context) {
         mHideLockViewRunnable = new HideLockViewRunnable(this);
         LayoutInflater.from(context).inflate(R.layout.superplayer_vod_player_fullscreen, this);
-
         mLayoutTop = (RelativeLayout) findViewById(R.id.superplayer_rl_top);
+        ScreenUtils.setMarginTop(mLayoutTop);
         mLayoutTop.setOnClickListener(this);
         mLayoutBottom = (LinearLayout) findViewById(R.id.superplayer_ll_bottom);
         mLayoutBottom.setOnClickListener(this);
