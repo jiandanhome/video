@@ -48,5 +48,4 @@ object EjuVideo {
         MusicListProvider.musicList.clear()
         MusicListProvider.musicList.addAll(list)
     }
-
 }

@@ -30,6 +30,8 @@ import com.tencent.ugc.TXVideoEditConstants;
 import com.tencent.ugc.TXVideoEditer;
 import com.tencent.ugc.TXVideoInfoReader;
 
+import java.util.List;
+
 /**
  * 腾讯云短视频UGCKit:视频裁剪控件
  * <p>
@@ -111,7 +113,6 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
             ToastUtil.toastShortMessage(getResources().getString(R.string.ugckit_video_cutter_activity_oncreate_an_unknown_error_occurred_the_path_cannot_be_empty));
             return;
         }
-
         VideoEditerSDK.getInstance().setVideoPath(videoPath);
         // 初始化播放器界面[必须在setPictureList/setVideoPath设置数据源之后]
         getVideoPlayLayout().initPlayerLayout();
@@ -161,17 +162,16 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
         }
         final int thumbnailCount = count;
 
+
         VideoEditerSDK.getInstance().initThumbnailList(new TXVideoEditer.TXThumbnailListener() {
             @Override
             public void onThumbnail(final int index, long timeMs, final Bitmap bitmap) {
-                TXLog.d(TAG, "onThumbnail index:" + index + ",timeMs:" + timeMs);
                 BackgroundTasks.getInstance().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         getVideoCutLayout().addThumbnail(index, bitmap);
-
                         if (index >= thumbnailCount - 1) { // Note: index从0开始增长
-                            Log.i(TAG, "Load Thumbnail Complete");
+                            Log.i(TAG, "Load Thumbnail Complete ");
                             mComplete = true;
                         }
                     }

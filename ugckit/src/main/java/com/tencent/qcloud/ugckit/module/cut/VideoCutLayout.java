@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tencent.liteav.basic.log.TXCLog;
+import com.tencent.qcloud.ugckit.custom.EjuVideoConfig;
 import com.tencent.qcloud.ugckit.module.PlayerManagerKit;
 import com.tencent.qcloud.ugckit.R;
 
@@ -101,8 +102,8 @@ public class VideoCutLayout extends RelativeLayout implements IVideoCutLayout, V
         int durationS = (int) (videoInfo.duration / 1000);
         int thumbCount = durationS / 3;
 
-        if (durationS >= MAX_DURATION) {
-            durationS = MAX_DURATION;
+        if (durationS >= EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()) {
+            durationS = EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs();
         }
         mTextDuration.setText(getResources().getString(R.string.ugckit_video_cutter_activity_load_video_success_already_picked) + durationS + "s");
 

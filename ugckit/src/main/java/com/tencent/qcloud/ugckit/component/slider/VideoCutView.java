@@ -14,9 +14,11 @@ import android.widget.RelativeLayout;
 
 import com.tencent.liteav.basic.log.TXCLog;
 
+import com.tencent.qcloud.ugckit.custom.EjuVideoConfig;
 import com.tencent.qcloud.ugckit.module.effect.time.TCVideoEditerAdapter;
 import com.tencent.qcloud.ugckit.module.effect.utils.Edit;
 import com.tencent.qcloud.ugckit.R;
+import com.tencent.qcloud.ugckit.utils.ScreenUtils;
 import com.tencent.rtmp.TXLog;
 import com.tencent.ugc.TXVideoEditConstants;
 
@@ -120,14 +122,14 @@ public class VideoCutView extends RelativeLayout implements RangeSlider.OnRangeC
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
         int width = count * mSingleWidth;
         mAllWidth = width;
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        int screenWidth = dm.widthPixels;
-        if (width > screenWidth) {
-            width = screenWidth;
+        width+=ScreenUtils.dp2px(getContext(),24F);
+        int maxWidth = (int) (ScreenUtils.getScreenWidth(getContext())-ScreenUtils.dp2px(getContext(),40F));
+        if (width > maxWidth) {
+            width = maxWidth;
         }
-        layoutParams.width = width + 2 * resources.getDimensionPixelOffset(R.dimen.ugckit_cut_margin);
+        layoutParams.width = width;
         setLayoutParams(layoutParams);
+
     }
 
     /**
@@ -145,8 +147,8 @@ public class VideoCutView extends RelativeLayout implements RangeSlider.OnRangeC
         }
         mVideoDuration = videoInfo.duration;
 
-        if (mVideoDuration >= 16000) {
-            mViewMaxDuration = 16000;
+        if (mVideoDuration >= EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()) {
+            mViewMaxDuration = EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs();
         } else {
             mViewMaxDuration = mVideoDuration;
         }

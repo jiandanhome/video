@@ -39,6 +39,7 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat"]
     implementation rootProject.ext.dependencies["recyclerview"]
     implementation rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["constraintlayout"]
 
 
 

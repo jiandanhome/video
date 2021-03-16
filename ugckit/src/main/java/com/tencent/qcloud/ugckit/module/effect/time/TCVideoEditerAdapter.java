@@ -5,11 +5,16 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
+import android.hardware.camera2.params.OisSample;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
+import com.bumptech.glide.Glide;
 import com.tencent.qcloud.ugckit.R;
 
 import java.util.ArrayList;
@@ -26,16 +31,12 @@ public class TCVideoEditerAdapter extends RecyclerView.Adapter<TCVideoEditerAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int height = mContext.getResources().getDimensionPixelOffset(R.dimen.ugckit_video_thumbnail_width);
-        ImageView view = new ImageView(parent.getContext());
-        view.setLayoutParams(new ViewGroup.LayoutParams(height, height));
-        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ugc_video_cut_thumb,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.thumb.setImageBitmap(data.get(position));
+        Glide.with(holder.thumb).load(data.get(position)).centerCrop().into(holder.thumb);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class TCVideoEditerAdapter extends RecyclerView.Adapter<TCVideoEditerAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            thumb = (ImageView) itemView;
+            thumb = (ImageView) itemView.findViewById(R.id.ivThumb);
         }
     }
 

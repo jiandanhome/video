@@ -9,6 +9,7 @@ import com.tencent.qcloud.ugckit.UGCKit;
 import com.tencent.qcloud.ugckit.module.cut.IVideoCutLayout;
 import com.tencent.qcloud.ugckit.module.effect.utils.DraftEditer;
 import com.tencent.qcloud.ugckit.module.effect.utils.EffectEditer;
+import com.tencent.rtmp.TXLog;
 import com.tencent.ugc.TXVideoEditConstants;
 import com.tencent.ugc.TXVideoEditer;
 import com.tencent.ugc.TXVideoInfoReader;

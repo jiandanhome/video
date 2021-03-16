@@ -24,9 +24,9 @@ public class TCVideoCutActivity extends FragmentActivity {
     private UGCKitVideoCut mUGCKitVideoCut;
 
     private String mVideoPath;                // 视频路径
-    private String mVideoUri;                // 视频路径Uri
-    private int    mVideoResolution = -1;    // 视频分辨率[从录制跳转的视频才有此参数，生成视频时保持与录制设置同样的分辨率]
-    private int    mCustomBitrate;           //视频自定义码率
+    private String mVideoUri;                 // 视频路径Uri
+    private int    mVideoResolution = -1;     // 视频分辨率[从录制跳转的视频才有此参数，生成视频时保持与录制设置同样的分辨率]
+    private int    mCustomBitrate;            // 视频自定义码率
 
     private IVideoCutKit.OnCutListener mOnCutListener = new IVideoCutKit.OnCutListener() {
         /**

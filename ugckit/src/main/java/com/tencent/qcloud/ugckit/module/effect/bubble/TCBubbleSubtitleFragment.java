@@ -103,7 +103,6 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
         if (timeLineView != null) {
             mVideoProgressController = timeLineView.getVideoProgressController();
         }
-
         recoverFromManager();
     }
 

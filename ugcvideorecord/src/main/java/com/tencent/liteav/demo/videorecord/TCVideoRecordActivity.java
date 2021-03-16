@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.tencent.qcloud.ugckit.custom.EjuVideoConfig;
 import com.tencent.qcloud.ugckit.utils.ToastUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.core.content.ContextCompat;
@@ -144,8 +145,8 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
     private void initData() {
         Intent intent = getIntent();
         if (intent != null) {
-            mMinDuration = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_MIN_DURATION, 15 * 1000);
-            mMaxDuration = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_MAX_DURATION, 60 * 1000);
+            mMinDuration = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_MIN_DURATION, EjuVideoConfig.INSTANCE.getRecordMinTimeIsMs());
+            mMaxDuration = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_MAX_DURATION, EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs());
 
             mAspectRatio = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_ASPECT_RATIO, TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);
             mRecommendQuality = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_RECOMMEND_QUALITY, -1);

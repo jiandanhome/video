@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.eju.ugcvideojoin.adapter.SelectedVideoAdapter
 import com.eju.ugcvideojoin.adapter.VideoAdapter
+import com.tencent.liteav.demo.videoediter.TCVideoCoverSelectActivity
 import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo
@@ -110,7 +111,13 @@ class UGCSelectVideoActivity:AppCompatActivity() {
             val selectedList:ArrayList<TCVideoFileInfo> =selectedVideoAdapter?.selectedVideoList?: arrayListOf()
             if(selectedList.isNotEmpty()){
                 if(selectedList.size==1){
-                    //todo
+                    val videoOutputPath=selectedList.get(0).filePath
+                    val videoOutputUri=selectedList.get(0).fileUri
+//                    startActivity(Intent(this, TCVideoCutActivity::class.java)
+//                        .putExtra(UGCKitConstants.VIDEO_PATH,videoOutputPath)
+//                        .putExtra(UGCKitConstants.VIDEO_URI, videoOutputUri.toString())
+//                    )
+                    TCVideoCoverSelectActivity.open(this,videoOutputPath,videoOutputUri.toString())
                 }else{
                     startActivity(
                         Intent(this, UGCVideoJoinActivity::class.java)

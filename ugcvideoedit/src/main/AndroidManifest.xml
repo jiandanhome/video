@@ -33,6 +33,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".TCVideoCoverSelectActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:theme="@style/UGCEditEditerActivityTheme">
+            <intent-filter>
+                <action android:name="${applicationId}.videocut" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".TCVideoEffectActivity"
             android:screenOrientation="portrait"
