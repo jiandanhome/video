@@ -1,4 +1,4 @@
-package com.tencent.qcloud.ugckit.component.dialogfragment;
+package com.tencent.qcloud.ugckit.custom;
 
 import android.app.Dialog;
 import android.content.Context;

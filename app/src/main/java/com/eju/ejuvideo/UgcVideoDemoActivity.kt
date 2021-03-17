@@ -1,7 +1,9 @@
 package com.eju.ejuvideo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.eju.video.EjuVideo
 
@@ -12,7 +14,7 @@ class UgcVideoDemoActivity : AppCompatActivity() {
     }
 
     fun record(view: View){
-        EjuVideo.startVideoRecord(this)
+        EjuVideo.startVideoRecord(this,20)
     }
 
 
@@ -24,5 +26,11 @@ class UgcVideoDemoActivity : AppCompatActivity() {
 
     fun select(view: View){
         EjuVideo.joinVideo(this)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.i("sck220", "使用页面: ${requestCode} ${resultCode} ${EjuVideo.getVideoPathFromIntent(data)}")
     }
 }

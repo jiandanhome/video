@@ -37,7 +37,7 @@ public class AlbumSaver {
 
     private long    mVideoDuration;
     private String  mVideoOutputPath;
-    private String mCoverImagePath;
+    private String  mCoverImagePath;
 
     public static AlbumSaver getInstance(@NonNull Context context) {
         if (sInstance == null) {
@@ -86,7 +86,7 @@ public class AlbumSaver {
                 mContext.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
 
                 if (mCoverImagePath != null) {
-                    insertVideoThumb(file.getPath(), mCoverImagePath);
+//                    insertVideoThumb(file.getPath(), mCoverImagePath);
                 }
                 ToastUtil.toastShortMessage("视频已保存到手机相册");
             } catch (Exception e) {

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.tencent.qcloud.ugckit.UGCKit;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
+import com.tencent.qcloud.ugckit.custom.EjuVideoConfig;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -16,12 +17,21 @@ import java.util.Date;
 public class VideoPathUtil {
     private static final String TAG = "VideoPathUtil";
 
+
+    public static String generateVideoPath() {
+        return generateVideoPath(null);
+    }
+
     /**
      * 生成编辑后输出视频路径
      *
      * @return
      */
-    public static String generateVideoPath() {
+    public static String generateVideoPath(String videoName) {
+        videoName=TextUtils.isEmpty(videoName)?generateVideoName()+"":videoName;
+        if(!TextUtils.isEmpty(EjuVideoConfig.INSTANCE.getVideoOutputDirPath())){
+            return new File(EjuVideoConfig.INSTANCE.getVideoOutputDirPath(),videoName+".mp4").getAbsolutePath();
+        }
         File sdcardDir = UGCKit.getAppContext().getExternalFilesDir(null);
         if (sdcardDir == null) {
             Log.e(TAG, "generateVideoPath sdcardDir is null");
@@ -33,11 +43,15 @@ public class VideoPathUtil {
         if (!outputFolder.exists()) {
             outputFolder.mkdirs();
         }
+        return outputFolder + File.separator + videoName+".mp4";
+    }
+
+    private static String generateVideoName(){
         String current = String.valueOf(System.currentTimeMillis() / 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String time = sdf.format(new Date(Long.valueOf(current + "000")));
-        String saveFileName = String.format("TXVideo_%s.mp4", time);
-        return outputFolder + "/" + saveFileName;
+        String saveFileName = String.format("video_%s", time);
+        return saveFileName;
     }
 
     public static String getCustomVideoOutputPath() {

@@ -24,7 +24,7 @@ import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.component.bubbleview.BubbleView;
 import com.tencent.qcloud.ugckit.component.bubbleview.BubbleViewParams;
 import com.tencent.qcloud.ugckit.component.bubbleview.BubbleViewFactory;
-import com.tencent.qcloud.ugckit.component.dialogfragment.TCWordInputDialog;
+import com.tencent.qcloud.ugckit.custom.TCWordInputDialog;
 import com.tencent.qcloud.ugckit.component.floatlayer.FloatLayerView;
 import com.tencent.qcloud.ugckit.component.floatlayer.FloatLayerViewGroup;
 import com.tencent.qcloud.ugckit.component.timeline.RangeSliderViewContainer;
@@ -35,8 +35,6 @@ import com.tencent.ugc.TXVideoEditer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 气泡字幕

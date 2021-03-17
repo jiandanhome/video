@@ -98,7 +98,7 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
                 if (editFlag) {
                     ProcessKit.getInstance().startProcess();
                 } else {
-                    VideoGenerateKit.getInstance().startGenerate();
+                    VideoGenerateKit.getInstance().startGenerate(null);
                 }
             }
         });

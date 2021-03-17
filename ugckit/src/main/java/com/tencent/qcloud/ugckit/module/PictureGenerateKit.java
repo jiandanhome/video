@@ -40,7 +40,7 @@ public class PictureGenerateKit extends BaseGenerateKit implements TXVideoGenera
      */
     public void startGenerate() {
         mCurrentState = PlayState.STATE_GENERATE;
-        mVideoOutputPath = VideoPathUtil.generateVideoPath();
+        mVideoOutputPath = VideoPathUtil.generateVideoPath(null);
 
         TXVideoEditer editer = VideoEditerSDK.getInstance().getEditer();
         if (editer != null) {

@@ -137,7 +137,7 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
             public void toSelect() {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setDataAndType(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "video/*");
-                startActivityForResult(intent,222);
+                startActivityForResult(intent,UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY);
             }
         });
 
@@ -179,10 +179,11 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
         } else {
             intent.putExtra(UGCKitConstants.VIDEO_RECORD_RESOLUTION, mResolution);
         }
+        intent.putExtra(UGCKitConstants.ENABLE_CHANGE_VIDEO_NAME, getIntent().getBooleanExtra(UGCKitConstants.ENABLE_CHANGE_VIDEO_NAME,false));
         intent.putExtra(UGCKitConstants.VIDEO_PATH, ugcKitResult.outputPath);
-        startActivity(intent);
-//        finish();
+        startActivityForResult(intent,UGCKitConstants.ACTIVITY_REQUEST_CODE_EDIT_VIDEO);
     }
+
 
     private void startPreviewActivity(UGCKitResult ugcKitResult) {
         Intent intent = new Intent(getApplicationContext(), TCRecordPreviewActivity.class);
@@ -241,24 +242,33 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode==222&&resultCode==RESULT_OK){
-            if(data!=null&&data.getData()!=null){
-                String localVideoPath= PathUtils.getPath(this,data.getData());
-                long aLong=getVideoDuration(localVideoPath);
-                if(aLong>=61*1000){
-                    ToastUtil.toastShortMessage("视频长度超过60s");
-                }else{
-                    UGCKitResult ugcKitResult=new UGCKitResult();
-                    ugcKitResult.outputPath=localVideoPath;
-                    startEditActivity(ugcKitResult);
-                }
+        if(resultCode==RESULT_OK){
+            switch (requestCode){
+                case UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY:
+                    if(data!=null&&data.getData()!=null){
+                        String localVideoPath= PathUtils.getPath(this,data.getData());
+                        long aLong=getVideoDuration(localVideoPath);
+                        if(aLong>=61*1000){
+                            ToastUtil.toastShortMessage("视频长度超过60s");
+                        }else{
+                            UGCKitResult ugcKitResult=new UGCKitResult();
+                            ugcKitResult.outputPath=localVideoPath;
+                            startEditActivity(ugcKitResult);
+                        }
+                    }
+                    break;
+                case UGCKitConstants.ACTIVITY_REQUEST_CODE_EDIT_VIDEO:
+                    if(data!=null){
+                        setResult(RESULT_OK,data);
+                        finish();
+                    }
+                    break;
             }
         }
     }
 
 
     private long getVideoDuration(String videoPath) {
-        Log.i("sck220", "getVideoDuration: "+videoPath);
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(videoPath);
         long duration=getVideoDuration(mediaMetadataRetriever,videoPath);

@@ -7,7 +7,6 @@ import android.content.Intent
 import com.eju.ugcvideojoin.UGCSelectVideoActivity
 import com.tencent.liteav.demo.superplayer.TXVideoPlayerActivity
 import com.tencent.liteav.demo.videoediter.TCVideoCoverSelectActivity
-import com.tencent.liteav.demo.videoediter.custom.VideoOutProvider
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity
 import com.tencent.qcloud.ugckit.UGCKit
 import com.tencent.qcloud.ugckit.UGCKitConstants
@@ -20,37 +19,43 @@ object EjuVideo {
     fun init(context: Context,licenceUrl:String,licenceKey:String) {
         UGCKit.init(context.applicationContext)
         TXUGCBase.getInstance().setLicence(context.applicationContext, licenceUrl, licenceKey)
-
     }
 
-    fun setVideoProvider(videoProvider:(String)->Unit){
-        VideoOutProvider.videoProvider=videoProvider
+    //视频录制和编辑
+    //提供选择音乐的列表
+    fun provideMusicList(list:List<TCMusicInfo>){
+        MusicListProvider.musicList.clear()
+        MusicListProvider.musicList.addAll(list)
     }
-
-    fun startVideoRecord(context: Context){
-        context.startActivity(Intent(context, TCVideoRecordActivity::class.java))
+    fun startVideoRecord(activity: Activity,requestCode:Int,enableChangeVideoName:Boolean=false){
+        activity.startActivityForResult(Intent(activity, TCVideoRecordActivity::class.java)
+            .putExtra(UGCKitConstants.ENABLE_CHANGE_VIDEO_NAME,enableChangeVideoName)
+            ,requestCode)
     }
-
-    fun startVideoRecord(fragment: Fragment){
-        fragment?.activity?.let {
-            fragment.startActivity(Intent(it,TCVideoRecordActivity::class.java))
+    fun startVideoRecord(fragment: Fragment,requestCode:Int,enableChangeVideoName:Boolean=false){
+        fragment.activity?.let {
+            fragment.startActivityForResult(Intent(it, TCVideoRecordActivity::class.java)
+                .putExtra(UGCKitConstants.ENABLE_CHANGE_VIDEO_NAME,enableChangeVideoName)
+                ,requestCode)
         }
     }
+    fun getVideoPathFromIntent(data:Intent?):String?{
+        return data?.getStringExtra(UGCKitConstants.VIDEO_PATH)
+    }
 
+
+    //视频播放
     fun playVideo(context: Context,videoUrl:String?){
         videoUrl?.let {
             TXVideoPlayerActivity.open(context,it)
         }
     }
 
+    //视频拼接
     fun joinVideo(context: Context){
         context.startActivity(Intent(context,UGCSelectVideoActivity::class.java))
     }
 
-    fun provideMusicList(list:List<TCMusicInfo>){
-        MusicListProvider.musicList.clear()
-        MusicListProvider.musicList.addAll(list)
-    }
 
 
     //本地视频封面选择
@@ -60,7 +65,7 @@ object EjuVideo {
     fun selectVideoCover(fragment: Fragment, localVideoPath:String,requestCode:Int){
         TCVideoCoverSelectActivity.open(fragment,localVideoPath,requestCode)
     }
-    fun getVideoCover(data:Intent):String{
-        return data.getStringExtra(UGCKitConstants.COVER_PIC)
+    fun getVideoCoverFromIntent(data:Intent?):String?{
+        return data?.getStringExtra(UGCKitConstants.COVER_PIC)
     }
 }

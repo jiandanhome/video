@@ -90,7 +90,7 @@ public class UGCKitVideoJoin implements IVideoJoinKit, TXVideoJoiner.TXVideoJoin
             });
         }
         mTXVideoJoiner.setVideoJoinerListener(this);
-        mOutputPath = VideoPathUtil.generateVideoPath();
+        mOutputPath = VideoPathUtil.generateVideoPath(null);
 
         mProgressFragmentUtil = new ProgressFragmentUtil(mContext, mContext.getResources().getString(R.string.ugckit_video_joining));
         mProgressFragmentUtil.showLoadingProgress(new ProgressFragmentUtil.IProgressListener() {

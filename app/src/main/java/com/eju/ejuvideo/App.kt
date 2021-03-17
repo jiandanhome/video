@@ -4,9 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import com.eju.video.EjuVideo
 import com.gyf.immersionbar.ImmersionBar
+import com.tencent.qcloud.ugckit.custom.EjuVideoConfig
 
 class App:Application() {
     override fun onCreate() {
@@ -47,9 +49,10 @@ class App:Application() {
 
 
         EjuVideo.init(this,licenceUrl,licenceKey)
-        EjuVideo.setVideoProvider {
-            Log.i("sck220", "onCreate: ${it}")
-        }
+        EjuVideoConfig.recordMinTimeIsMs=10000
+        EjuVideoConfig.recordMaxTimeIsMs=20000
+        EjuVideoConfig.videoOutputDirPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).absolutePath
+
 
     }
 }

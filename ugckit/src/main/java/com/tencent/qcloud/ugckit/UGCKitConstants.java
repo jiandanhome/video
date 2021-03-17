@@ -33,6 +33,7 @@ public class UGCKitConstants {
     public static final String VIDEO_RECORD_NO_CACHE = "nocache";
     public static final String VIDEO_RECORD_DURATION = "duration";
     public static final String VIDEO_RECORD_RESOLUTION = "resolution";
+    public static final String ENABLE_CHANGE_VIDEO_NAME = "enable_change_video_name";
 
     public static final String OUTPUT_DIR_NAME = "TXUGC";
 
@@ -48,6 +49,9 @@ public class UGCKitConstants {
     public static final String MUSIC_NAME = "bgm_name";
 
     public static final int ACTIVITY_OTHER_REQUEST_CODE = 2;
+
+    public static final int ACTIVITY_REQUEST_CODE_EDIT_VIDEO= 200;
+    public static final int ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY= 222;
 
     public static final String KEY_FRAGMENT = "fragment_type";
     public static final int TYPE_EDITER_BGM = 1;

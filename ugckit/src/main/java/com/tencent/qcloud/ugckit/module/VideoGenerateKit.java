@@ -77,9 +77,9 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
     /**
      * 开始合成视频
      */
-    public void startGenerate() {
+    public void startGenerate(String videoName) {
         mCurrentState = PlayState.STATE_GENERATE;
-        mVideoOutputPath = VideoPathUtil.generateVideoPath();
+        mVideoOutputPath = VideoPathUtil.generateVideoPath(videoName);
         Log.d(TAG, "startGenerate mVideoOutputPath:" + mVideoOutputPath);
 
         long startTime = VideoEditerSDK.getInstance().getCutterStartTime();

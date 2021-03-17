@@ -1,6 +1,7 @@
 package com.tencent.liteav.demo.videoediter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,13 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.tencent.liteav.demo.videoediter.custom.VideoOutProvider;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.UGCKitVideoEdit;
 import com.tencent.qcloud.ugckit.basic.UGCKitResult;
 import com.tencent.qcloud.ugckit.module.editer.IVideoEditKit;
 import com.tencent.qcloud.ugckit.module.editer.UGCKitEditConfig;
+import com.tencent.qcloud.ugckit.utils.ToastUtil;
 import com.tencent.ugc.TXVideoEditConstants;
+
+import java.io.File;
 
 public class TCVideoEditerActivity extends FragmentActivity implements View.OnClickListener {
     private static final String TAG = "TCVideoEditerActivity";
@@ -38,11 +41,11 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
     private IVideoEditKit.OnEditListener mOnEditListener = new IVideoEditKit.OnEditListener() {
         @Override
         public void onEditCompleted(UGCKitResult ugcKitResult) {
-            VideoOutProvider.INSTANCE.outputVideoPath(ugcKitResult.outputPath);
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(ugcKitResult.outputPath))));
+            ToastUtil.toastShortMessage("视频已保存到手机相册");
+            setResult(RESULT_OK,new Intent().putExtra(UGCKitConstants.VIDEO_PATH,ugcKitResult.outputPath));
             finish();
-//            startPreviewActivity(ugcKitResult);
         }
-
         @Override
         public void onEditCanceled() {
             finish();
@@ -57,6 +60,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
         initData();
 
         mUGCKitVideoEdit = (UGCKitVideoEdit) findViewById(R.id.video_edit);
+        mUGCKitVideoEdit.enableChangeVideoName=getIntent().getBooleanExtra(UGCKitConstants.ENABLE_CHANGE_VIDEO_NAME,false);
         Log.d(TAG, "mVideoPath:" + mVideoPath);
         if (!TextUtils.isEmpty(mVideoPath)) {
             mUGCKitVideoEdit.setVideoPath(mVideoPath);
@@ -71,7 +75,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
             config.resolution = mVideoResolution;
         }
         config.isCoverGenerate = true;
-        config.isSaveToDCIM = true;
+        config.isSaveToDCIM = false;
         mUGCKitVideoEdit.setConfig(config);
 
         mTextBgm = (TextView) findViewById(R.id.tv_bgm);

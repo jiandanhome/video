@@ -17,7 +17,9 @@ import com.tencent.qcloud.ugckit.basic.ITitleBarLayout;
 import com.tencent.qcloud.ugckit.basic.JumpActivityMgr;
 import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener;
 import com.tencent.qcloud.ugckit.basic.UGCKitResult;
+import com.tencent.qcloud.ugckit.custom.EjuVideoConfig;
 import com.tencent.qcloud.ugckit.custom.UgcAlertDialog;
+import com.tencent.qcloud.ugckit.custom.UgcRefactorNameDialog;
 import com.tencent.qcloud.ugckit.module.PlayerManagerKit;
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit;
 import com.tencent.qcloud.ugckit.module.editer.AbsVideoEditUI;
@@ -36,6 +38,7 @@ import com.tencent.ugc.TXVideoInfoReader;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
 
 public class UGCKitVideoEdit extends AbsVideoEditUI {
     private static final String TAG = "UGCKitVideoEdit";
@@ -44,6 +47,8 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
     @Nullable
     private OnEditListener       mOnEditListener;
     private boolean              mIsPublish;
+
+    public boolean enableChangeVideoName=false;
 
     public UGCKitVideoEdit(Context context) {
         super(context);
@@ -71,13 +76,15 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
                 backPressed();
             }
         });
-        getTitleBar().setOnRightClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        getTitleBar().setOnRightClickListener(v -> {
 //                showPublishDialog();
-                VideoEditerSDK.getInstance().setPublishFlag(false);
-                startGenerate();
+            VideoEditerSDK.getInstance().setPublishFlag(false);
+            if(enableChangeVideoName){
+                showChangeNameDialog();
+            }else{
+                startGenerate(null);
             }
+
         });
         // 监听电话
         TelephonyUtil.getInstance().setOnTelephoneListener(new TelephonyUtil.OnTelephoneListener() {
@@ -106,6 +113,22 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
 
         // 设置默认为全功能导入视频方式
         JumpActivityMgr.getInstance().setQuickImport(false);
+    }
+
+    private void showChangeNameDialog(){
+        Context context = getContext();
+        if(context instanceof FragmentActivity){
+            UgcRefactorNameDialog dialog=new  UgcRefactorNameDialog();
+            dialog.setLeftClickCallback(() -> {
+                startGenerate(null);
+                return null;
+            });
+            dialog.setRightClickCallback(s -> {
+                startGenerate(s);
+                return null;
+            });
+            dialog.showAllowingStateLoss(((FragmentActivity) context).getSupportFragmentManager());
+        }
     }
 
     @Override
@@ -197,7 +220,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
                     @Override
                     public void onClick(int which) {
                         VideoEditerSDK.getInstance().setPublishFlag(false);
-                        startGenerate();
+                        startGenerate(null);
                     }
                 });
 
@@ -207,7 +230,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
                         @Override
                         public void onClick(int which) {
                             VideoEditerSDK.getInstance().setPublishFlag(true);
-                            startGenerate();
+                            startGenerate(null);
                         }
 
                     });
@@ -292,7 +315,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
         });
     }
 
-    private void startGenerate() {
+    private void startGenerate(String videoName) {
         mProgressFragmentUtil.showLoadingProgress(new ProgressFragmentUtil.IProgressListener() {
             @Override
             public void onStop() {
@@ -302,7 +325,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
         });
         PlayerManagerKit.getInstance().stopPlay();
 //        VideoGenerateKit.getInstance().addTailWaterMark();
-        VideoGenerateKit.getInstance().startGenerate();
+        VideoGenerateKit.getInstance().startGenerate(videoName);
     }
 
     private void stopGenerate() {

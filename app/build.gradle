@@ -52,6 +52,7 @@ dependencies {
 
 
     implementation project(':ugcvideo')
+    implementation project(':ugckit')
 //    implementation 'com.github.jiandanhome:video:1.0.4'
 
 
