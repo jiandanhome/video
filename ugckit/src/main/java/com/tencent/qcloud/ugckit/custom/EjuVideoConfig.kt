@@ -6,5 +6,10 @@ object EjuVideoConfig{
     var recordMaxTimeIsMs = 60000
 
 
+    var videoOutputDirPath:String?=null
+    var pictureOutputDirPath:String?=null
+
+
+
 
 }

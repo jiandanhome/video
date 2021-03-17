@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,6 +15,7 @@ import com.eju.ugcvideojoin.adapter.SelectedVideoAdapter
 import com.eju.ugcvideojoin.adapter.VideoAdapter
 import com.tencent.liteav.demo.videoediter.TCVideoCoverSelectActivity
 import com.tencent.qcloud.ugckit.UGCKitConstants
+import com.tencent.qcloud.ugckit.custom.EjuVideoConfig
 import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
@@ -117,7 +119,7 @@ class UGCSelectVideoActivity:AppCompatActivity() {
 //                        .putExtra(UGCKitConstants.VIDEO_PATH,videoOutputPath)
 //                        .putExtra(UGCKitConstants.VIDEO_URI, videoOutputUri.toString())
 //                    )
-                    TCVideoCoverSelectActivity.open(this,videoOutputPath,videoOutputUri.toString())
+                    TCVideoCoverSelectActivity.open(this,videoOutputPath,20)
                 }else{
                     startActivity(
                         Intent(this, UGCVideoJoinActivity::class.java)
@@ -128,6 +130,13 @@ class UGCSelectVideoActivity:AppCompatActivity() {
                     )
                 }
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==20&&resultCode== RESULT_OK){
+            Log.i("sck220", "onActivityResult: ${data?.getStringExtra(UGCKitConstants.COVER_PIC)}")
         }
     }
 

@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.core.content.ContextCompat;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -257,6 +258,7 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
 
 
     private long getVideoDuration(String videoPath) {
+        Log.i("sck220", "getVideoDuration: "+videoPath);
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(videoPath);
         long duration=getVideoDuration(mediaMetadataRetriever,videoPath);

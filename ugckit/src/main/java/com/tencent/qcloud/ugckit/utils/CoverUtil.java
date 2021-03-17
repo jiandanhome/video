@@ -39,6 +39,7 @@ public class CoverUtil {
         mVideoPath = path;
     }
 
+
     /**
      * 创建缩略图，必须先调用{@link CoverUtil#setInputPath(String)} 设置视频路径
      */

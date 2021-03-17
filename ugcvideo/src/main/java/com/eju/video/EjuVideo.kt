@@ -1,13 +1,16 @@
 package com.eju.video
 
+import android.app.Activity
 import androidx.fragment.app.Fragment
 import android.content.Context
 import android.content.Intent
 import com.eju.ugcvideojoin.UGCSelectVideoActivity
 import com.tencent.liteav.demo.superplayer.TXVideoPlayerActivity
+import com.tencent.liteav.demo.videoediter.TCVideoCoverSelectActivity
 import com.tencent.liteav.demo.videoediter.custom.VideoOutProvider
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity
 import com.tencent.qcloud.ugckit.UGCKit
+import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.custom.MusicListProvider
 import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicInfo
 import com.tencent.ugc.TXUGCBase
@@ -47,5 +50,17 @@ object EjuVideo {
     fun provideMusicList(list:List<TCMusicInfo>){
         MusicListProvider.musicList.clear()
         MusicListProvider.musicList.addAll(list)
+    }
+
+
+    //本地视频封面选择
+    fun selectVideoCover(activity: Activity, localVideoPath:String,requestCode:Int){
+        TCVideoCoverSelectActivity.open(activity,localVideoPath,requestCode)
+    }
+    fun selectVideoCover(fragment: Fragment, localVideoPath:String,requestCode:Int){
+        TCVideoCoverSelectActivity.open(fragment,localVideoPath,requestCode)
+    }
+    fun getVideoCover(data:Intent):String{
+        return data.getStringExtra(UGCKitConstants.COVER_PIC)
     }
 }
