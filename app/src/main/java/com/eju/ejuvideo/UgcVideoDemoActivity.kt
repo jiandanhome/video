@@ -11,6 +11,7 @@ class UgcVideoDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ugc_video_demo)
+
     }
 
     fun record(view: View){
@@ -19,9 +20,10 @@ class UgcVideoDemoActivity : AppCompatActivity() {
 
 
     fun play(view: View){
-        val urlList= listOf("https://img-test.jiandanhome.com/relations/963/2021-03-09/source/1615255594522.mp4",
-        "")
-        EjuVideo.playVideo(this,urlList[0])
+//        val urlList= listOf("https://img-test.jiandanhome.com/relations/963/2021-03-09/source/1615255594522.mp4",
+//        "/storage/emulated/0/Movies/TXVideo_20210308_152809.mp4")
+//        EjuVideo.playVideo(this,urlList[0])
+        startActivity(Intent(this,UgcVideoViewDemo::class.java))
     }
 
     fun select(view: View){

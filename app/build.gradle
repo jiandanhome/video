@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -51,8 +52,10 @@ dependencies {
     implementation "com.gyf.immersionbar:immersionbar:3.0.0"
 
 
+    implementation rootProject.ext.dependencies["liteav"]
     implementation project(':ugcvideo')
     implementation project(':ugckit')
+    implementation project(':superplayerkit')
 //    implementation 'com.github.jiandanhome:video:1.0.4'
 
 
