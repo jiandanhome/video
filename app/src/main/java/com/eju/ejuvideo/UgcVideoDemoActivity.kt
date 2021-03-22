@@ -27,7 +27,8 @@ class UgcVideoDemoActivity : AppCompatActivity() {
     }
 
     fun select(view: View){
-        EjuVideo.joinVideo(this)
+//        EjuVideo.joinVideo(this)
+        EjuVideo.selectVideoCover(this,"/storage/emulated/0/DCIM/Camera/VID_20201224_100659.mp4",20)
     }
 
 

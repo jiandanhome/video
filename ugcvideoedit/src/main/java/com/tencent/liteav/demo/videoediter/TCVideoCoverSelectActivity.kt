@@ -38,10 +38,9 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
 
     private var videoEditer:TXVideoEditer?=null
 
-
     private var currentTimeMs=0
 
-    private lateinit var videoInfo:TXVideoEditConstants.TXVideoInfo
+    private var videoDuration:Long=0
 
     private var singleThumbWidth=0
 
@@ -122,18 +121,19 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         val videoPath = intent.getStringExtra(UGCKitConstants.VIDEO_PATH)
         val videoUri = intent.getStringExtra(UGCKitConstants.VIDEO_URI)
         this.videoPath=  if(Build.VERSION.SDK_INT >= 29) videoUri else videoPath
+        this.videoPath="https://img-test.jiandanhome.com/relations/963/2021-03-09/source/1615255594522.mp4"
     }
 
 
     private fun init(){
         try {
-            videoInfo = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
+            val videoInfo = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
+            videoDuration=videoInfo.duration
         } catch (e: Exception) {
             Toast.makeText(this, "视频文件读取失败", Toast.LENGTH_SHORT).show()
-            finish()
             return
         }
-        thumbCount = (videoInfo.duration/3000).toInt()
+        thumbCount = (videoDuration/3000).toInt()
         singleThumbWidth= ScreenUtils.dp2px(this,40F).toInt()
         allThumbWidth=thumbCount*singleThumbWidth
 
@@ -149,7 +149,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
 
 
     private fun loadThumbList(){
-        videoEditer?.setCutFromTime(0, videoInfo.duration)
+        videoEditer?.setCutFromTime(0, videoDuration)
         videoEditer?.getThumbnail(
             thumbCount,
             IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH,
@@ -169,7 +169,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
                 tvTime.text = DateTimeUtil.formattedTime((currentTimeMs * 1F / 1000).roundToInt().toLong())
                 if (currentPlayState == PlayState.STATE_PLAY) {
                     val distance =
-                        (currentTimeMs * 1F / videoInfo.duration) * allThumbWidth - currentScrolledX
+                        (currentTimeMs * 1F / videoDuration) * allThumbWidth - currentScrolledX
                     videoThumb.scrollThumb(distance)
                 }
             }
@@ -184,7 +184,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
                 currentScrolledX += dx
                 if (currentPlayState != PlayState.STATE_PLAY) {
                     val progress = currentScrolledX.toFloat() / allThumbWidth
-                    val currentTimeMs = (videoInfo.duration * progress).toInt()
+                    val currentTimeMs = (videoDuration * progress).toInt()
                     videoEditer?.previewAtTime(currentTimeMs.toLong())
                     currentPlayState = PlayState.STATE_PREVIEW_AT_TIME
                 }
@@ -213,7 +213,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
                 currentPlayState=PlayState.STATE_PLAY
                 ivPlay.setImageResource(R.drawable.ic_ugc_pause)
             }else if(currentPlayState==PlayState.STATE_PREVIEW_AT_TIME){
-                videoEditer?.startPlayFromTime(currentTimeMs.toLong(),videoInfo.duration)
+                videoEditer?.startPlayFromTime(currentTimeMs.toLong(),videoDuration)
                 currentPlayState=PlayState.STATE_PLAY
                 ivPlay.setImageResource(R.drawable.ic_ugc_pause)
             }
@@ -222,7 +222,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
     }
 
     private fun startPLay(){
-        videoEditer?.startPlayFromTime(0,videoInfo.duration)
+        videoEditer?.startPlayFromTime(0,videoDuration)
         currentPlayState=PlayState.STATE_PLAY
         ivPlay.setImageResource(R.drawable.ic_ugc_pause)
     }
