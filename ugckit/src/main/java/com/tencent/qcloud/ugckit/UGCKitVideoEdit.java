@@ -120,7 +120,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
         if(context instanceof FragmentActivity){
             UgcRefactorNameDialog dialog=new  UgcRefactorNameDialog();
             dialog.setLeftClickCallback(() -> {
-                startGenerate(null);
+//                startGenerate(null);
                 return null;
             });
             dialog.setRightClickCallback(s -> {

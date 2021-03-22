@@ -11,12 +11,23 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.tencent.qcloud.ugckit.R
+import com.tencent.qcloud.ugckit.utils.ToastUtil
 import kotlinx.android.synthetic.main.dialog_ugc_refactor_name.*
 
 class UgcRefactorNameDialog: DialogFragment() {
 
     var leftClickCallback:(()->Unit)?=null
     var rightClickCallback:((String)->Unit)?=null
+
+    companion object{
+        fun newInstance(name:String):UgcRefactorNameDialog {
+            return UgcRefactorNameDialog().apply {
+                arguments=Bundle().apply {
+                    putString("name",name)
+                }
+            }
+        }
+    }
 
 
     override fun onCreateView(
@@ -38,13 +49,22 @@ class UgcRefactorNameDialog: DialogFragment() {
             dismissAllowingStateLoss()
         }
         tvRight.setOnClickListener {
-            rightClickCallback?.invoke(etInput.text.toString().trim())
-            dismissAllowingStateLoss()
+            val newName=etInput.text.toString().trim()
+            if(!newName.isNullOrEmpty()){
+                rightClickCallback?.invoke(newName)
+                dismissAllowingStateLoss()
+            }else{
+                ToastUtil.toastShortMessage("请输入短视频名字")
+            }
         }
         tvRight.postDelayed({
             val imm =
                 activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
+            arguments?.getString("name")?.let { name->
+                etInput.setText(name)
+                etInput.setSelection(name.length)
+            }
         }, 50)
     }
 
