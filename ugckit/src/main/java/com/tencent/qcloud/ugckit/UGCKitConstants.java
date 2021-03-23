@@ -15,6 +15,7 @@ public class UGCKitConstants {
     public static final String USER_PWD = "userpwd";
 
     public static final String COVER_PIC = "cover_pic";
+    public static final String COVER_PIC_TIME_IS_MS = "cover_pic_time_is_ms";
     public static final String PLAY_URL = "play_url";
     public static final String PUSHER_AVATAR = "pusher_avatar";
     public static final String PUSHER_ID = "pusher_id";

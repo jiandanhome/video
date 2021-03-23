@@ -68,4 +68,7 @@ object EjuVideo {
     fun getVideoCoverFromIntent(data:Intent?):String?{
         return data?.getStringExtra(UGCKitConstants.COVER_PIC)
     }
+    fun getVideoCoverTimeFromIntent(data:Intent?):Int?{
+        return data?.getIntExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,0)
+    }
 }

@@ -23,6 +23,7 @@ import com.tencent.qcloud.ugckit.module.cut.IVideoCutLayout
 import com.tencent.qcloud.ugckit.module.effect.utils.PlayState
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
 import com.tencent.qcloud.ugckit.utils.ScreenUtils
+import com.tencent.qcloud.ugckit.utils.ToastUtil
 import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoEditer
 import com.tencent.ugc.TXVideoInfoReader
@@ -112,7 +113,11 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
             UGCImageUtils.saveBitmap(this,coverBitmap)?.let {
                 runOnUiThread { hideLoading() }
                 setResult(RESULT_OK,Intent().putExtra(UGCKitConstants.COVER_PIC,it))
+                setResult(RESULT_OK,Intent().putExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,currentTimeMs))
                 finish()
+            }?:runOnUiThread {
+                hideLoading()
+                ToastUtil.toastShortMessage("获取封面图失败 请售后重试")
             }
         }
     }
