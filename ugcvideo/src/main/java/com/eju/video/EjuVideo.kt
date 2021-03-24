@@ -19,11 +19,6 @@ import com.tencent.rtmp.downloader.TXVodDownloadMediaInfo
 import com.tencent.ugc.TXUGCBase
 import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoInfoReader
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 object EjuVideo {
 
@@ -33,17 +28,9 @@ object EjuVideo {
     }
 
 
-    suspend fun getVideoFileInfo(context:Context,localVideoPath:String): TXVideoEditConstants.TXVideoInfo {
-        return withContext(Dispatchers.IO){
-            TXVideoInfoReader.getInstance(context).getVideoFileInfo(localVideoPath)
-        }
-    }
+     fun getVideoFileInfo(context:Context,localVideoPath:String): TXVideoEditConstants.TXVideoInfo=TXVideoInfoReader.getInstance(context).getVideoFileInfo(localVideoPath)
 
-    suspend fun getVideoFrameAt(context: Context,localVideoPath:String,timeInMs:Int):Bitmap?{
-        return withContext(Dispatchers.IO){
-            TXVideoInfoReader.getInstance(context).getSampleImage(timeInMs.toLong(),localVideoPath)
-        }
-    }
+     fun getVideoFrameAt(context: Context,localVideoPath:String,timeInMs:Int):Bitmap?=TXVideoInfoReader.getInstance(context).getSampleImage(timeInMs.toLong(),localVideoPath)
 
     //视频录制和编辑
     //提供选择音乐的列表
@@ -96,44 +83,4 @@ object EjuVideo {
         return data?.getIntExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,0)
     }
 
-    //m3u8视频下载
-    @Deprecated("只能下载m3u8视频")
-    suspend fun downloadVideo(outputPath:String,videoUrl:String,progressCallback:((Float)->Unit)?=null):TXVodDownloadMediaInfo{
-        return suspendCancellableCoroutine { continuation->
-            TXVodDownloadManager.getInstance().setDownloadPath(outputPath)
-            TXVodDownloadManager.getInstance().setListener(
-                object:ITXVodDownloadListener{
-                    override fun onDownloadStart(p0: TXVodDownloadMediaInfo?) {
-                    }
-                    override fun onDownloadProgress(p0: TXVodDownloadMediaInfo?) {
-                        p0?.let {
-                            progressCallback?.invoke(it.progress)
-                        }
-                    }
-                    override fun onDownloadStop(p0: TXVodDownloadMediaInfo?) {
-                    }
-                    override fun onDownloadFinish(p0: TXVodDownloadMediaInfo) {
-                        continuation.resume(p0)
-                    }
-                    override fun onDownloadError(p0: TXVodDownloadMediaInfo?, p1: Int, p2: String?) {
-                        continuation.resumeWithException(IllegalStateException(p2))
-                    }
-                    override fun hlsKeyVerify(
-                        p0: TXVodDownloadMediaInfo?,
-                        p1: String?,
-                        p2: ByteArray?
-                    ): Int {
-                        return 0
-                    }
-
-                })
-            val request=TXVodDownloadManager.getInstance().startDownloadUrl(videoUrl)
-            continuation.invokeOnCancellation {
-                TXVodDownloadManager.getInstance().stopDownload(request)
-            }
-        }
-    }
-    fun deleteDownloadFile(path:String){
-        TXVodDownloadManager.getInstance().deleteDownloadFile(path)
-    }
 }

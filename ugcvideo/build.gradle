@@ -36,7 +36,6 @@ dependencies {
 
     implementation rootProject.ext.dependencies["appcompat"]
     implementation rootProject.ext.dependencies["liteav"]
-    implementation rootProject.ext.dependencies["coroutines"]
 
     implementation project(':ugckit')
     implementation project(':ugcvideorecord')
