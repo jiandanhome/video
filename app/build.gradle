@@ -58,6 +58,7 @@ dependencies {
     implementation project(':superplayerkit')
 //    implementation 'com.github.jiandanhome:video:1.0.4'
 
+    implementation rootProject.ext.dependencies["coroutines"]
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

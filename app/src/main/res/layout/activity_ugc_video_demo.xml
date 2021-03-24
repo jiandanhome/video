@@ -19,17 +19,27 @@
 
     <Button
         android:layout_width="match_parent"
-        android:text="play video"
+        android:text="简单播放"
         android:textAllCaps="false"
         android:onClick="play"
         android:layout_height="wrap_content">
     </Button>
 
+
     <Button
         android:layout_width="match_parent"
-        android:text="join video"
+        android:text="播放网络视频"
         android:textAllCaps="false"
-        android:onClick="select"
+        android:onClick="play1"
+        android:layout_height="wrap_content">
+    </Button>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="选择本地视频封面"
+        android:textAllCaps="false"
+        android:onClick="selectVideoCover"
         android:layout_height="wrap_content">
     </Button>
 

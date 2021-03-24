@@ -54,7 +54,6 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
     private var currentPlayState=PlayState.STATE_NONE
 
 
-
     companion object{
         fun open(activity: Activity, videoPath: String,requestCode:Int) {
             activity.startActivityForResult(
@@ -126,7 +125,6 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         val videoPath = intent.getStringExtra(UGCKitConstants.VIDEO_PATH)
         val videoUri = intent.getStringExtra(UGCKitConstants.VIDEO_URI)
         this.videoPath=  if(Build.VERSION.SDK_INT >= 29) videoUri else videoPath
-        this.videoPath="https://img-test.jiandanhome.com/relations/963/2021-03-09/source/1615255594522.mp4"
     }
 
 
@@ -136,6 +134,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
             videoDuration=videoInfo.duration
         } catch (e: Exception) {
             Toast.makeText(this, "视频文件读取失败", Toast.LENGTH_SHORT).show()
+            finish()
             return
         }
         thumbCount = (videoDuration/3000).toInt()
@@ -167,22 +166,26 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         }
     }
 
-    private fun setListeners() {
-        videoEditer?.setTXVideoPreviewListener(object : TXVideoEditer.TXVideoPreviewListener {
-            override fun onPreviewProgress(time: Int) {
-                currentTimeMs = time / 1000  //videoProgress:ms
-                tvTime.text = DateTimeUtil.formattedTime((currentTimeMs * 1F / 1000).roundToInt().toLong())
-                if (currentPlayState == PlayState.STATE_PLAY) {
-                    val distance =
-                        (currentTimeMs * 1F / videoDuration) * allThumbWidth - currentScrolledX
+    private val videoPreviewListener=object : TXVideoEditer.TXVideoPreviewListener {
+        override fun onPreviewProgress(time: Int) {
+            currentTimeMs = time / 1000  //videoProgress:ms
+//            Log.i("sck220", "onPreviewProgress: ${currentTimeMs}")
+            tvTime.text = DateTimeUtil.formattedTime((currentTimeMs * 1F / 1000).roundToInt().toLong())
+            if (currentPlayState == PlayState.STATE_PLAY) {
+                val distance = (currentTimeMs * 1F / videoDuration) * allThumbWidth - currentScrolledX
+                if(distance>=0){
                     videoThumb.scrollThumb(distance)
                 }
             }
+        }
 
-            override fun onPreviewFinished() {
-                startPLay()
-            }
-        })
+        override fun onPreviewFinished() {
+            startPLay()
+        }
+    }
+
+    private fun setListeners() {
+        videoEditer?.setTXVideoPreviewListener(videoPreviewListener)
         videoThumb.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -190,6 +193,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
                 if (currentPlayState != PlayState.STATE_PLAY) {
                     val progress = currentScrolledX.toFloat() / allThumbWidth
                     val currentTimeMs = (videoDuration * progress).toInt()
+//                    Log.i("sck220", "previewAtTime: ${currentTimeMs}")
                     videoEditer?.previewAtTime(currentTimeMs.toLong())
                     currentPlayState = PlayState.STATE_PREVIEW_AT_TIME
                 }
