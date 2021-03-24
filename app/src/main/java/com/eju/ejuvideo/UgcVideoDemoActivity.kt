@@ -6,9 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.eju.video.EjuVideo
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class UgcVideoDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

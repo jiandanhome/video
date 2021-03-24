@@ -31,8 +31,7 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
 
     private var gestureDetector:GestureDetector?=null
 
-
-    private lateinit var videoPlayer:TXVodPlayer
+    private var videoPlayer:TXVodPlayer?=null
 
     private var currentPlayState=PlayState.STATE_NONE
 
@@ -58,7 +57,7 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
                 val max=seekBar.max
                 val progress=(current.toFloat()/max)*videoDuration
                 if (fromUser) {
-                    videoPlayer.seek(progress)
+                    videoPlayer?.seek(progress)
                 }
             }
 
@@ -70,7 +69,7 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
                 val current=seekBar.progress
                 val max=seekBar.max
                 val progress=(current.toFloat()/max)*videoDuration
-                videoPlayer.seek(progress)
+                videoPlayer?.seek(progress)
                 if(currentPlayState==PlayState.STATE_PAUSE){
                     resume()
                 }
@@ -93,7 +92,7 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
 
     fun start(videoPath: String,looping:Boolean=false){
         initVideoPlayer(looping)
-        videoPlayer.startPlay(videoPath)
+        videoPlayer?.startPlay(videoPath)
     }
 
     private fun initVideoPlayer(looping:Boolean){
@@ -116,7 +115,7 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
 
     fun pause(){
         if(currentPlayState==PlayState.STATE_PLAY){
-            videoPlayer.pause()
+            videoPlayer?.pause()
             currentPlayState=PlayState.STATE_PAUSE
             ibPlayPause.setImageResource(R.drawable.ic_ugc_play)
             ivPlay.visibility=View.VISIBLE
@@ -125,7 +124,7 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
 
     fun resume(){
         if(currentPlayState==PlayState.STATE_PAUSE){
-            videoPlayer.resume()
+            videoPlayer?.resume()
             currentPlayState=PlayState.STATE_PLAY
             ibPlayPause.setImageResource(R.drawable.ic_ugc_pause)
             ivPlay.visibility=View.GONE
@@ -175,7 +174,7 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
     }
 
     override fun onDetachedFromWindow() {
-        videoPlayer.stopPlay(true)
+        videoPlayer?.stopPlay(true)
         cloudVideoView.onDestroy()
         super.onDetachedFromWindow()
     }
