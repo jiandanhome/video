@@ -131,6 +131,14 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
         }
     }
 
+    fun destroy(){
+        try {
+            videoPlayer?.stopPlay(true)
+            cloudVideoView.onDestroy()
+        } catch (e: Exception) {
+        }
+    }
+
 
     override fun onPlayEvent(p0: TXVodPlayer?, event: Int, param: Bundle) {
         if(event!= TXLiveConstants.PLAY_EVT_PLAY_PROGRESS){
@@ -173,9 +181,6 @@ class VideoView(context: Context, attributeSet: AttributeSet) :ConstraintLayout(
     override fun onNetStatus(p0: TXVodPlayer?, p1: Bundle?) {
     }
 
-    override fun onDetachedFromWindow() {
-        videoPlayer?.stopPlay(true)
-        cloudVideoView.onDestroy()
-        super.onDetachedFromWindow()
-    }
+
+
 }
