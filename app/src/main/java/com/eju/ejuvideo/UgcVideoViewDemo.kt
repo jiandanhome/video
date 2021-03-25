@@ -11,7 +11,7 @@ class UgcVideoViewDemo : AppCompatActivity() {
         setContentView(R.layout.activity_ugc_video_view_demo)
         val localVideoPath="/storage/emulated/0/DCIM/Camera/VID_20201224_100659.mp4"
         val videoUrl="https://img-test.jiandanhome.com/relations/963/2021-03-09/source/1615255594522.mp4"
-        video_view.start(localVideoPath,true)
+//        video_view.start(localVideoPath,true)
     }
 
     override fun onPause() {
@@ -22,5 +22,10 @@ class UgcVideoViewDemo : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         video_view.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        video_view.destroy()
     }
 }

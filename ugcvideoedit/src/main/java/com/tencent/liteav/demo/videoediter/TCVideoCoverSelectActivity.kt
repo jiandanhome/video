@@ -111,8 +111,10 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
             val coverBitmap=TXVideoInfoReader.getInstance(this).getSampleImage(currentTimeMs.toLong(),intent.getStringExtra(UGCKitConstants.VIDEO_PATH))
             UGCImageUtils.saveBitmap(this,coverBitmap)?.let {
                 runOnUiThread { hideLoading() }
-                setResult(RESULT_OK,Intent().putExtra(UGCKitConstants.COVER_PIC,it))
-                setResult(RESULT_OK,Intent().putExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,currentTimeMs))
+                setResult(RESULT_OK,Intent()
+                    .putExtra(UGCKitConstants.COVER_PIC,it)
+                    .putExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,currentTimeMs)
+                )
                 finish()
             }?:runOnUiThread {
                 hideLoading()
