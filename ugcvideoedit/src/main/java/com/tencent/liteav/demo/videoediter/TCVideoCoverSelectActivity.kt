@@ -1,7 +1,6 @@
 package com.tencent.liteav.demo.videoediter
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -29,6 +28,7 @@ import com.tencent.ugc.TXVideoEditer
 import com.tencent.ugc.TXVideoInfoReader
 import kotlinx.android.synthetic.main.ugcedit_activity_video_cover_selecet.*
 import kotlin.concurrent.thread
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class TCVideoCoverSelectActivity:AppCompatActivity() {
@@ -182,7 +182,10 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         }
 
         override fun onPreviewFinished() {
-            startPLay()
+            if(abs(currentTimeMs-videoDuration) <=80){
+                startPLay()
+                videoThumb.scrollThumb(-allThumbWidth.toFloat())
+            }
         }
     }
 

@@ -152,7 +152,7 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
             mAspectRatio = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_ASPECT_RATIO, TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);
             mRecommendQuality = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_RECOMMEND_QUALITY, -1);
             mResolution = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_RESOLUTION, TXRecordCommon.VIDEO_RESOLUTION_540_960);
-            mVideoBitrate = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_BITE_RATE, 6500);
+            mVideoBitrate = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_BITE_RATE, 5000);
             mFps = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_FPS, 60);
             mGop = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_GOP, 3);
             mOrientation = intent.getIntExtra(UGCKitConstants.RECORD_CONFIG_HOME_ORIENTATION, TXLiveConstants.VIDEO_ANGLE_HOME_DOWN);

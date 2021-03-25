@@ -31,7 +31,8 @@ class UgcVideoDemoActivity : AppCompatActivity() {
 
 
     fun selectVideoCover(view: View){
-        EjuVideo.selectVideoCover(this,"/storage/emulated/0/DCIM/Camera/VID_20201224_100659.mp4",20)
+//        EjuVideo.selectVideoCover(this,"/storage/emulated/0/DCIM/Camera/VID_20201224_100659.mp4",20)
+        EjuVideo.selectVideoCover(this,"/storage/emulated/0/Movies/video_20210325_151024.mp4",20)
     }
 
 
