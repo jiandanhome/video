@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.eju.video.EjuVideo
+import com.tencent.qcloud.ugckit.utils.ToastUtil
+import java.util.*
 
 class UgcVideoDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,19 +22,25 @@ class UgcVideoDemoActivity : AppCompatActivity() {
 
 
     fun play(view: View){
-        startActivity(Intent(this,UgcVideoViewDemo::class.java))
+        startActivity(Intent(this,SimplePlayVideo::class.java))
     }
 
     fun play1(view: View){
-        val urlList= listOf("https://img-test.jiandanhome.com/relations/963/2021-03-09/source/1615255594522.mp4",
-            "/storage/emulated/0/Movies/TXVideo_20210308_152809.mp4")
-        EjuVideo.playVideo(this,urlList[0])
+        val localVideo=Random().nextBoolean()
+        if(localVideo){
+            ToastUtil.toastShortMessage("播放本地视频")
+            EjuVideo.playVideo(this,"/storage/emulated/0/DCIM/Camera/VID_20201224_100659.mp4")
+        }else{
+            ToastUtil.toastShortMessage("播放网络视频")
+            EjuVideo.playVideo(this,"https://img-test.jiandanhome.com/relations/963/2021-03-09/source/1615255594522.mp4")
+        }
+
+
     }
 
 
     fun selectVideoCover(view: View){
-//        EjuVideo.selectVideoCover(this,"/storage/emulated/0/DCIM/Camera/VID_20201224_100659.mp4",20)
-        EjuVideo.selectVideoCover(this,"/storage/emulated/0/Movies/video_20210325_151024.mp4",20)
+        EjuVideo.selectVideoCover(this,"/storage/emulated/0/DCIM/Camera/VID_20201224_100659.mp4",20)
     }
 
 

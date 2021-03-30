@@ -32,7 +32,7 @@ public class RecordRightLayout extends RelativeLayout implements IRecordRightLay
     private TextView        mTextSoundEffect;
     private LinearLayout    mLayoutSoundEffect;
 
-    private int disableColor =Color.parseColor("#e4e4e4");
+    private int disableColor =Color.parseColor("#cccccc");
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -71,6 +71,7 @@ public class RecordRightLayout extends RelativeLayout implements IRecordRightLay
         mLayoutSoundEffect = (LinearLayout) findViewById(R.id.layout_sound_effect);
         mImageSoundEffect = (ImageView) findViewById(R.id.iv_sound_effect);
         mTextSoundEffect = (TextView) findViewById(R.id.tv_sound_effect);
+
         mLayoutSoundEffect.setOnClickListener(this);
     }
 
@@ -106,8 +107,10 @@ public class RecordRightLayout extends RelativeLayout implements IRecordRightLay
     public void setMusicIconEnable(boolean enable) {
         if (enable) {
             mImageMusic.clearColorFilter();
+            mTextMusic.setTextColor(Color.WHITE);
         } else {
             mImageMusic.setColorFilter(disableColor);
+            mTextMusic.setTextColor(disableColor);
         }
         mLayoutMusic.setEnabled(enable);
     }
@@ -139,8 +142,10 @@ public class RecordRightLayout extends RelativeLayout implements IRecordRightLay
     public void setSoundEffectIconEnable(boolean enable) {
         if (enable) {
             mImageSoundEffect.clearColorFilter();
+            mTextSoundEffect.setTextColor(Color.WHITE);
         } else {
             mImageSoundEffect.setColorFilter(disableColor);
+            mTextSoundEffect.setTextColor(disableColor);
         }
         mLayoutSoundEffect.setEnabled(enable);
     }

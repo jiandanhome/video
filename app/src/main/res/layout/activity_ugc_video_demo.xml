@@ -19,7 +19,7 @@
 
     <Button
         android:layout_width="match_parent"
-        android:text="简单播放"
+        android:text="VideoView的使用"
         android:textAllCaps="false"
         android:onClick="play"
         android:layout_height="wrap_content">
@@ -28,7 +28,7 @@
 
     <Button
         android:layout_width="match_parent"
-        android:text="播放网络视频"
+        android:text="带手势控制和全屏切换的播放页面"
         android:textAllCaps="false"
         android:onClick="play1"
         android:layout_height="wrap_content">

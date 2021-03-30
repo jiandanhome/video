@@ -35,7 +35,7 @@
         </activity>
 
         <activity
-            android:name=".TCVideoCoverSelectActivity"
+            android:name=".TCSelectVideoCoverActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:theme="@style/UGCEditEditerActivityTheme">

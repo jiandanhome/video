@@ -7,15 +7,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import com.eju.ugcvideojoin.UGCSelectVideoActivity
 import com.tencent.liteav.demo.superplayer.TXVideoPlayerActivity
-import com.tencent.liteav.demo.videoediter.TCVideoCoverSelectActivity
+import com.tencent.liteav.demo.videoediter.TCSelectVideoCoverActivity
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity
 import com.tencent.qcloud.ugckit.UGCKit
 import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.custom.MusicListProvider
 import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicInfo
-import com.tencent.rtmp.downloader.ITXVodDownloadListener
-import com.tencent.rtmp.downloader.TXVodDownloadManager
-import com.tencent.rtmp.downloader.TXVodDownloadMediaInfo
 import com.tencent.ugc.TXUGCBase
 import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoInfoReader
@@ -71,10 +68,10 @@ object EjuVideo {
 
     //本地视频封面选择
     fun selectVideoCover(activity: Activity, localVideoPath:String,requestCode:Int){
-        TCVideoCoverSelectActivity.open(activity,localVideoPath,requestCode)
+        TCSelectVideoCoverActivity.open(activity,localVideoPath,requestCode)
     }
     fun selectVideoCover(fragment: Fragment, localVideoPath:String,requestCode:Int){
-        TCVideoCoverSelectActivity.open(fragment,localVideoPath,requestCode)
+        TCSelectVideoCoverActivity.open(fragment,localVideoPath,requestCode)
     }
     fun getVideoCoverFromIntent(data:Intent?):String?{
         return data?.getStringExtra(UGCKitConstants.COVER_PIC)

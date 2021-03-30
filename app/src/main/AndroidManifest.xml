@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EjuVideo">
-        <activity android:name=".UgcVideoViewDemo"></activity>
+        <activity android:name=".SimplePlayVideo"></activity>
         <activity
             android:name=".UgcVideoDemoActivity"
             android:screenOrientation="portrait">

@@ -2,11 +2,9 @@ package com.tencent.liteav.demo.videoediter
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -15,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.tencent.qcloud.ugckit.UGCKit
 import com.tencent.qcloud.ugckit.UGCKitConstants
-import com.tencent.qcloud.ugckit.custom.EjuVideoConfig
 import com.tencent.qcloud.ugckit.custom.UGCImageUtils
 import com.tencent.qcloud.ugckit.custom.UGCLoadingDialog
 import com.tencent.qcloud.ugckit.module.cut.IVideoCutLayout
@@ -26,12 +23,12 @@ import com.tencent.qcloud.ugckit.utils.ToastUtil
 import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoEditer
 import com.tencent.ugc.TXVideoInfoReader
-import kotlinx.android.synthetic.main.ugcedit_activity_video_cover_selecet.*
+import kotlinx.android.synthetic.main.ugcedit_activity_select_video_cover.*
 import kotlin.concurrent.thread
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class TCVideoCoverSelectActivity:AppCompatActivity() {
+class TCSelectVideoCoverActivity:AppCompatActivity() {
 
     private var mVideoResolution:Int=-1
 
@@ -57,7 +54,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
     companion object{
         fun open(activity: Activity, videoPath: String,requestCode:Int) {
             activity.startActivityForResult(
-                Intent(activity, TCVideoCoverSelectActivity::class.java)
+                Intent(activity, TCSelectVideoCoverActivity::class.java)
                     .putExtra(UGCKitConstants.VIDEO_PATH, videoPath)
                     .putExtra(UGCKitConstants.VIDEO_URI, Uri.parse(videoPath).toString()
                     )
@@ -68,7 +65,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         fun open(fragment: Fragment, videoPath: String,requestCode:Int) {
             fragment.activity?.let { activity->
                 fragment.startActivityForResult(
-                    Intent(activity, TCVideoCoverSelectActivity::class.java)
+                    Intent(activity, TCSelectVideoCoverActivity::class.java)
                         .putExtra(UGCKitConstants.VIDEO_PATH, videoPath)
                         .putExtra(UGCKitConstants.VIDEO_URI, Uri.parse(videoPath).toString()
                         )
@@ -81,13 +78,15 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.ugcedit_activity_video_cover_selecet)
+        setContentView(R.layout.ugcedit_activity_select_video_cover)
         setTitle()
         parseIntent()
-        init()
-        loadThumbList()
-        setListeners()
-        startPLay()
+        readVideoPathInfo {
+            init()
+            loadThumbList()
+            setListeners()
+            startPlay()
+        }
     }
 
     private fun setTitle(){
@@ -110,12 +109,14 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         thread {
             val coverBitmap=TXVideoInfoReader.getInstance(this).getSampleImage(currentTimeMs.toLong(),intent.getStringExtra(UGCKitConstants.VIDEO_PATH))
             UGCImageUtils.saveBitmap(this,coverBitmap)?.let {
-                runOnUiThread { hideLoading() }
-                setResult(RESULT_OK,Intent()
-                    .putExtra(UGCKitConstants.COVER_PIC,it)
-                    .putExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,currentTimeMs)
-                )
-                finish()
+                runOnUiThread {
+                    hideLoading()
+                    setResult(RESULT_OK,Intent()
+                        .putExtra(UGCKitConstants.COVER_PIC,it)
+                        .putExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,currentTimeMs)
+                    )
+                    finish()
+                }
             }?:runOnUiThread {
                 hideLoading()
                 ToastUtil.toastShortMessage("获取封面图失败 请售后重试")
@@ -130,19 +131,30 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
     }
 
 
-    private fun init(){
-        try {
-            val videoInfo = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
-            videoDuration=videoInfo.duration
-        } catch (e: Exception) {
-            Toast.makeText(this, "视频文件读取失败", Toast.LENGTH_SHORT).show()
-            finish()
-            return
+    private fun readVideoPathInfo(successCallBack:()->Unit){
+        thread {
+            try {
+                val videoInfo = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
+                videoDuration=videoInfo.duration
+                runOnUiThread {
+                    successCallBack.invoke()
+                }
+
+            } catch (e: Exception) {
+                runOnUiThread{
+                    Toast.makeText(this, "本地视频文件读取失败", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
         }
+
+    }
+
+    private fun init(){
+
         thumbCount = (videoDuration/3000).toInt()
         singleThumbWidth= ScreenUtils.dp2px(this,40F).toInt()
         allThumbWidth=thumbCount*singleThumbWidth
-
 
         videoEditer= TXVideoEditer(this).apply {
             setVideoPath(videoPath)
@@ -155,7 +167,6 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
 
 
     private fun loadThumbList(){
-        videoEditer?.setCutFromTime(0, videoDuration)
         videoEditer?.getThumbnail(
             thumbCount,
             IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH,
@@ -182,10 +193,8 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         }
 
         override fun onPreviewFinished() {
-            if(abs(currentTimeMs-videoDuration) <=80){
-                startPLay()
-                videoThumb.scrollThumb(-allThumbWidth.toFloat())
-            }
+            startPlay()
+            videoThumb.scrollThumb(-allThumbWidth.toFloat())
         }
     }
 
@@ -235,7 +244,7 @@ class TCVideoCoverSelectActivity:AppCompatActivity() {
         }
     }
 
-    private fun startPLay(){
+    private fun startPlay(){
         videoEditer?.startPlayFromTime(0,videoDuration)
         currentPlayState=PlayState.STATE_PLAY
         ivPlay.setImageResource(R.drawable.ic_ugc_pause)

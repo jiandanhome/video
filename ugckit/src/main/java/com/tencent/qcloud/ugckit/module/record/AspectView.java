@@ -295,12 +295,14 @@ public class AspectView extends RelativeLayout implements View.OnClickListener {
     }
 
     public void enableMask() {
-        mImageAspectCurr.setColorFilter(Color.parseColor("#e4e4e4"));
+        mImageAspectCurr.setColorFilter(Color.parseColor("#cccccc"));
+        mTextAspect.setTextColor(Color.parseColor("#cccccc"));
         mLayoutAspect.setEnabled(false);
     }
 
     public void disableMask() {
         mImageAspectCurr.clearColorFilter();
+        mTextAspect.setTextColor(Color.WHITE);
         mLayoutAspect.setEnabled(true);
     }
 

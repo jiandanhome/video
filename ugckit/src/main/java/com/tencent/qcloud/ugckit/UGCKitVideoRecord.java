@@ -95,6 +95,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             public void onDraftTotal(long duration) {
                 getRecordRightLayout().setMusicIconEnable(false);
                 getRecordRightLayout().setAspectIconEnable(false);
+                getRecordRightLayout().setSoundEffectIconEnable(false);
 
                 float second = duration / 1000f;
                 boolean enable = second >= UGCKitRecordConfig.getInstance().mMinDuration / 1000;
@@ -128,6 +129,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             public void onReRecord() {
                 getRecordRightLayout().setMusicIconEnable(true);
                 getRecordRightLayout().setAspectIconEnable(true);
+                getRecordRightLayout().setSoundEffectIconEnable(true);
             }
         });
 
@@ -332,6 +334,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getRecordRightLayout().setMusicIconEnable(false);
         // 开始录制后不能切换屏比
         getRecordRightLayout().setAspectIconEnable(false);
+        getRecordRightLayout().setSoundEffectIconEnable(false);
 
         // 开始/继续录制
         int retCode = VideoRecordSDK.getInstance().startRecord();
@@ -542,7 +545,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
                 public Unit invoke() {
                     RecordMusicManager.getInstance().deleteMusic();
                     // 录制添加BGM后是录制不了人声的，而音效是针对人声有效的
-                    getRecordRightLayout().setSoundEffectIconEnable(true);
+//                    getRecordRightLayout().setSoundEffectIconEnable(true);
 
 //                        getRecordMusicPannel().setMusicName("");
                     getRecordMusicPannel().setVisibility(View.GONE);
