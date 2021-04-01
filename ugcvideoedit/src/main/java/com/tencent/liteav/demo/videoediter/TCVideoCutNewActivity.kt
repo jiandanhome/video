@@ -130,6 +130,10 @@ class TCVideoCutNewActivity:AppCompatActivity() {
     }
 
     private fun cutVideo(){
+        if(endTimeMs-startTimeMs<=3000){
+            ToastUtil.toastShortMessage("请至少选取3s以上")
+            return
+        }
         showProgress()
         thread {
             videoEditer?.setCutFromTime(startTimeMs, endTimeMs)
@@ -317,12 +321,11 @@ class TCVideoCutNewActivity:AppCompatActivity() {
                 val middleLayoutParams = vMiddle.layoutParams as LinearLayout.LayoutParams
 
                 if (leftLayoutParams.leftMargin + distance.toInt() >= initMarginLeft - currentScrolledX &&
-                    middleLayoutParams.width - distance.toInt() <= maxWidth
+                    middleLayoutParams.width - distance.toInt() <= maxWidth && middleLayoutParams.width - distance.toInt()>=0
                 ) {
                     leftLayoutParams.leftMargin += distance.toInt()
                     ivLeft.layoutParams = leftLayoutParams
 
-                    val middleLayoutParams = vMiddle.layoutParams as LinearLayout.LayoutParams
                     middleLayoutParams.width -= distance.toInt()
                     vMiddle.layoutParams = middleLayoutParams
 
@@ -352,7 +355,7 @@ class TCVideoCutNewActivity:AppCompatActivity() {
                 val leftLayoutParams = ivLeft.layoutParams as LinearLayout.LayoutParams
                 val space = allThumbWidth - (leftLayoutParams.leftMargin - (initMarginLeft - currentScrolledX))
 
-                if (middleLayoutParams.width + distance <= (Math.min(space.toFloat(),maxWidth))) {
+                if (middleLayoutParams.width + distance <= (Math.min(space.toFloat(),maxWidth))&&middleLayoutParams.width + distance>=0) {
                     middleLayoutParams.width += distance.toInt()
                     vMiddle.layoutParams = middleLayoutParams
                     endTimeMs =
