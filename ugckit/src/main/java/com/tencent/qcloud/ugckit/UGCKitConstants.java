@@ -29,6 +29,7 @@ public class UGCKitConstants {
 
     public static final String VIDEO_PATH = "key_video_editer_path";
     public static final String VIDEO_COVERPATH = "coverpath";
+    public static final String VIDEO_CUT_MAX_DURATION = "video_cut_max_duration";
     public static final String VIDEO_URI = "key_video_editer_uri_path";
 
     public static final String VIDEO_RECORD_NO_CACHE = "nocache";
@@ -53,6 +54,7 @@ public class UGCKitConstants {
 
     public static final int ACTIVITY_REQUEST_CODE_EDIT_VIDEO= 200;
     public static final int ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY= 222;
+    public static final int ACTIVITY_REQUEST_CODE_TO_JOIN_VIDEO= 223;
 
     public static final String KEY_FRAGMENT = "fragment_type";
     public static final int TYPE_EDITER_BGM = 1;

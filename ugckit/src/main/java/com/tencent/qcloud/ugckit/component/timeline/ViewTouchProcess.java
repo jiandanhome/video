@@ -1,6 +1,8 @@
 package com.tencent.qcloud.ugckit.component.timeline;
 
 import androidx.annotation.NonNull;
+
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 

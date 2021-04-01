@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tencent.liteav.demo.videoediter.TCVideoCutActivity
+import com.tencent.liteav.demo.videoediter.TCVideoCutNewActivity
 import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.component.dialogfragment.VideoWorkProgressFragment
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo
@@ -18,6 +19,7 @@ import com.tencent.ugc.TXVideoEditConstants.TXEffectType_DARK_DRAEM
 import com.tencent.ugc.TXVideoEditConstants.TXPreviewParam
 import com.tencent.ugc.TXVideoJoiner
 import kotlinx.android.synthetic.main.activity_ugc_video_join.*
+import java.io.File
 import java.io.FileInputStream
 
 
@@ -33,6 +35,8 @@ class UGCVideoJoinActivity :AppCompatActivity(){
         clContent.setPadding(0, ScreenUtils.getStatusBarHeight(this), 0, 0)
         initData()
     }
+
+    private var videoOutputPath:String?=null
 
     private fun initData(){
         val videoSourceList=intent.getParcelableArrayListExtra<TCVideoFileInfo>(UGCKitConstants.INTENT_KEY_MULTI_CHOOSE)
@@ -76,7 +80,7 @@ class UGCVideoJoinActivity :AppCompatActivity(){
         mTXVideoJoiner?.startPlay()
         showProgress()
         // 生成视频输出路径
-        val videoOutputPath = VideoPathUtil.generateVideoPath()
+        videoOutputPath = VideoPathUtil.generateVideoPath()
         mTXVideoJoiner?.setVideoJoinerListener(object : TXVideoJoiner.TXVideoJoinerListener {
             override fun onJoinProgress(p0: Float) {
                 updateProgress((p0 * 100).toInt())
@@ -85,10 +89,7 @@ class UGCVideoJoinActivity :AppCompatActivity(){
             override fun onJoinComplete(p0: TXVideoEditConstants.TXJoinerResult?) {
                 hideProgress()
                 if (p0?.retCode == TXVideoEditConstants.JOIN_RESULT_OK) {
-                    startActivity(Intent(this@UGCVideoJoinActivity,TCVideoCutActivity::class.java)
-                        .putExtra(UGCKitConstants.VIDEO_PATH,videoOutputPath)
-                        .putExtra(UGCKitConstants.VIDEO_URI, Uri.parse(videoOutputPath).toString())
-                    )
+                    setResult(RESULT_OK,Intent().putExtra(UGCKitConstants.VIDEO_PATH,videoOutputPath))
                 } else {
                     Toast.makeText(this@UGCVideoJoinActivity, "视频合成失败 ${p0?.descMsg}", Toast.LENGTH_SHORT).show()
                 }
@@ -103,6 +104,7 @@ class UGCVideoJoinActivity :AppCompatActivity(){
         hideProgress()
         videoWorkProgressFragment=VideoWorkProgressFragment.newInstance("视频拼接中")
         videoWorkProgressFragment?.setOnClickStopListener {
+            videoOutputPath?.let { File(it).delete() }
             hideProgress()
             finish()
         }

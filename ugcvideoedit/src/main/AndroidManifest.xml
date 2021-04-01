@@ -39,12 +39,14 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:theme="@style/UGCEditEditerActivityTheme">
-            <intent-filter>
-                <action android:name="${applicationId}.videocut" />
-                <action android:name="android.intent.action.MAIN" />
+        </activity>
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+
+        <activity
+            android:name=".TCVideoCutNewActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:theme="@style/UGCEditEditerActivityTheme">
         </activity>
 
         <activity

@@ -1,6 +1,7 @@
 package com.eju.ugcvideojoin
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -9,11 +10,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.eju.ugcvideojoin.adapter.SelectedVideoAdapter
 import com.eju.ugcvideojoin.adapter.VideoAdapter
 import com.tencent.liteav.demo.videoediter.TCSelectVideoCoverActivity
+import com.tencent.liteav.demo.videoediter.TCVideoCutNewActivity
 import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo
@@ -24,10 +27,21 @@ import kotlin.concurrent.thread
 
 class UGCSelectVideoActivity:AppCompatActivity() {
 
-    
+
     private var videoAdapter: VideoAdapter?=null
 
     private var selectedVideoAdapter: SelectedVideoAdapter?=null
+
+    companion object{
+        fun openForResult(activity: Activity, requestCode: Int) {
+            activity.startActivityForResult(Intent(activity,UGCSelectVideoActivity::class.java ), requestCode)
+        }
+        fun openForResult(fragment: Fragment, requestCode: Int) {
+            fragment.activity?.let {
+                fragment.startActivityForResult(Intent(it,UGCSelectVideoActivity::class.java ), requestCode)
+            }
+        }
+    }
 
     private val itemTouchHelper=ItemTouchHelper(object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(
@@ -112,21 +126,15 @@ class UGCSelectVideoActivity:AppCompatActivity() {
             val selectedList:ArrayList<TCVideoFileInfo> =selectedVideoAdapter?.selectedVideoList?: arrayListOf()
             if(selectedList.isNotEmpty()){
                 if(selectedList.size==1){
-                    val videoOutputPath=selectedList.get(0).filePath
-                    val videoOutputUri=selectedList.get(0).fileUri
-//                    startActivity(Intent(this, TCVideoCutActivity::class.java)
-//                        .putExtra(UGCKitConstants.VIDEO_PATH,videoOutputPath)
-//                        .putExtra(UGCKitConstants.VIDEO_URI, videoOutputUri.toString())
-//                    )
-                    TCSelectVideoCoverActivity.open(this,videoOutputPath,20)
-                }else{
-                    startActivity(
-                        Intent(this, UGCVideoJoinActivity::class.java)
-                            .putParcelableArrayListExtra(
-                                UGCKitConstants.INTENT_KEY_MULTI_CHOOSE,
-                                selectedList
-                            )
+                    val videoOutputPath= selectedList[0].filePath
+                    setResult(RESULT_OK,Intent()
+                        .putExtra(UGCKitConstants.VIDEO_PATH,videoOutputPath)
                     )
+                    finish()
+                }else{
+                    startActivityForResult(
+                        Intent(this, UGCVideoJoinActivity::class.java).putParcelableArrayListExtra(UGCKitConstants.INTENT_KEY_MULTI_CHOOSE, selectedList)
+                        ,UGCKitConstants.ACTIVITY_REQUEST_CODE_TO_JOIN_VIDEO)
                 }
             }
         }
@@ -134,8 +142,13 @@ class UGCSelectVideoActivity:AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==20&&resultCode== RESULT_OK){
-            Log.i("sck220", "onActivityResult: ${data?.getStringExtra(UGCKitConstants.COVER_PIC)}")
+        if(resultCode== RESULT_OK){
+            when(requestCode){
+                UGCKitConstants.ACTIVITY_REQUEST_CODE_TO_JOIN_VIDEO ->{
+                    setResult(RESULT_OK,data)
+                    finish()
+                }
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import com.eju.ugcvideojoin.UGCSelectVideoActivity
 import com.tencent.liteav.demo.superplayer.TXVideoPlayerActivity
 import com.tencent.liteav.demo.videoediter.TCSelectVideoCoverActivity
+import com.tencent.liteav.demo.videoediter.TCVideoCutNewActivity
 import com.tencent.liteav.demo.videorecord.TCVideoRecordActivity
 import com.tencent.qcloud.ugckit.UGCKit
 import com.tencent.qcloud.ugckit.UGCKitConstants
@@ -16,6 +17,7 @@ import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicInfo
 import com.tencent.ugc.TXUGCBase
 import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoInfoReader
+import kotlin.math.max
 
 object EjuVideo {
 
@@ -59,11 +61,6 @@ object EjuVideo {
         }
     }
 
-    //视频拼接
-    fun joinVideo(context: Context){
-        context.startActivity(Intent(context,UGCSelectVideoActivity::class.java))
-    }
-
 
 
     //本地视频封面选择
@@ -79,5 +76,23 @@ object EjuVideo {
     fun getVideoCoverTimeFromIntent(data:Intent?):Int?{
         return data?.getIntExtra(UGCKitConstants.COVER_PIC_TIME_IS_MS,0)
     }
+
+    //本地视频拼接
+    fun joinVideo(activity: Activity,requestCode:Int){
+        UGCSelectVideoActivity.openForResult(activity,requestCode)
+    }
+    fun joinVideo(fragment: Fragment,requestCode:Int){
+        UGCSelectVideoActivity.openForResult(fragment,requestCode)
+    }
+
+
+    //本地视频裁剪
+    fun cutVideo(activity: Activity,localVideoPath:String,maxDuration:Long,requestCode:Int){
+        TCVideoCutNewActivity.open(activity,localVideoPath, maxDuration,requestCode)
+    }
+    fun cutVideo(fragment: Fragment,localVideoPath:String,maxDuration:Long,requestCode:Int){
+        TCVideoCutNewActivity.open(fragment,localVideoPath, maxDuration,requestCode)
+    }
+
 
 }
