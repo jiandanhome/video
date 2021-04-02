@@ -139,10 +139,13 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
         mUGCKitVideoRecord.getRecordBottomLayout().setOnSelectVideoListener(new OnSelectVideoListener() {
             @Override
             public void toSelect() {
-//                UGCSelectVideoActivity.Companion.openForResult(TCVideoRecordActivity.this,UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY);
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "video/*");
-                startActivityForResult(intent,UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY);
+                if(EjuVideoConfig.INSTANCE.getUseVideoCut()){
+                    UGCSelectVideoActivity.Companion.openForResult(TCVideoRecordActivity.this,UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY);
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setDataAndType(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "video/*");
+                    startActivityForResult(intent,UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY);
+                }
             }
         });
 
@@ -250,18 +253,21 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
         if(resultCode==RESULT_OK){
             switch (requestCode){
                 case UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY:
-//                    String videoPath=data.getStringExtra(UGCKitConstants.VIDEO_PATH);
-//                    TCVideoCutNewActivity.Companion.open(this,videoPath,EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs(),
-//                            UGCKitConstants.ACTIVITY_REQUEST_CODE_TO_CUT_VIDEO);
-                    if(data!=null&&data.getData()!=null){
-                        String localVideoPath= PathUtils.getPath(this,data.getData());
-                        long aLong=getVideoDuration(localVideoPath);
-                        if(aLong>=EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()+1000){
-                            ToastUtil.toastShortMessage("视频长度超过"+EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()/1000+"s");
-                        }else{
-                            UGCKitResult ugcKitResult=new UGCKitResult();
-                            ugcKitResult.outputPath=localVideoPath;
-                            startEditActivity(ugcKitResult);
+                    if(EjuVideoConfig.INSTANCE.getUseVideoCut()){
+                        String videoPath=data.getStringExtra(UGCKitConstants.VIDEO_PATH);
+                        TCVideoCutNewActivity.Companion.open(this,videoPath,EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs(),
+                                UGCKitConstants.ACTIVITY_REQUEST_CODE_TO_CUT_VIDEO);
+                    }else{
+                        if(data!=null&&data.getData()!=null){
+                            String localVideoPath= PathUtils.getPath(this,data.getData());
+                            long aLong=getVideoDuration(localVideoPath);
+                            if(aLong>=EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()+1000){
+                                ToastUtil.toastShortMessage("视频长度超过"+EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()/1000+"s");
+                            }else{
+                                UGCKitResult ugcKitResult=new UGCKitResult();
+                                ugcKitResult.outputPath=localVideoPath;
+                                startEditActivity(ugcKitResult);
+                            }
                         }
                     }
                     break;

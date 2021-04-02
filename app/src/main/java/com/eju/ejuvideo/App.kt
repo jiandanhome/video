@@ -51,6 +51,7 @@ class App:Application() {
         EjuVideo.init(this,licenceUrl,licenceKey)
         EjuVideoConfig.recordMinTimeIsMs=10000
         EjuVideoConfig.recordMaxTimeIsMs=20000
+        EjuVideoConfig.useVideoCut=true
         EjuVideoConfig.videoOutputDirPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).absolutePath
 
 
