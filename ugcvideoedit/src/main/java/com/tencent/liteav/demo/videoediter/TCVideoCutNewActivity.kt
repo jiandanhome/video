@@ -25,14 +25,9 @@ import com.tencent.qcloud.ugckit.utils.VideoPathUtil
 import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoEditer
 import com.tencent.ugc.TXVideoInfoReader
-import kotlinx.android.synthetic.main.ugcedit_activity_select_video_cover.*
-import kotlinx.android.synthetic.main.ugcedit_activity_select_video_cover.flPlayVideo
-import kotlinx.android.synthetic.main.ugcedit_activity_select_video_cover.ivPlay
-import kotlinx.android.synthetic.main.ugcedit_activity_select_video_cover.titleLayout
-import kotlinx.android.synthetic.main.ugcedit_activity_select_video_cover.tvTime
-import kotlinx.android.synthetic.main.ugcedit_activity_select_video_cover.videoThumb
 import kotlinx.android.synthetic.main.ugcedit_activity_video_cut_new.*
 import java.io.File
+import javax.security.auth.login.LoginException
 import kotlin.concurrent.thread
 
 class TCVideoCutNewActivity:AppCompatActivity() {
@@ -124,7 +119,6 @@ class TCVideoCutNewActivity:AppCompatActivity() {
                 currentPlayState=PlayState.STATE_PAUSE
                 ivPlay.setImageResource(R.drawable.ic_ugc_play)
             }
-
             cutVideo()
         }
     }
@@ -250,7 +244,6 @@ class TCVideoCutNewActivity:AppCompatActivity() {
 
         override fun onPreviewFinished() {
             startPlay()
-            videoThumb.scrollThumb(-allThumbWidth.toFloat())
         }
     }
 
@@ -269,7 +262,6 @@ class TCVideoCutNewActivity:AppCompatActivity() {
                 if (currentPlayState != PlayState.STATE_PLAY) {
                     val progress = currentScrolledX.toFloat() / allThumbWidth
                     val currentTimeMs = (videoDuration * progress).toInt()
-//                    Log.i("sck220", "previewAtTime: ${currentTimeMs}")
                     videoEditer?.previewAtTime(currentTimeMs.toLong())
                     currentPlayState = PlayState.STATE_PREVIEW_AT_TIME
                 }
@@ -380,9 +372,12 @@ class TCVideoCutNewActivity:AppCompatActivity() {
     }
 
     private fun startPlay(){
-        videoEditer?.startPlayFromTime(startTimeMs, endTimeMs)
-        currentPlayState=PlayState.STATE_PLAY
-        ivPlay.setImageResource(R.drawable.ic_ugc_pause)
+        flPlayVideo.postDelayed({
+            videoEditer?.startPlayFromTime(startTimeMs, endTimeMs)
+            currentPlayState=PlayState.STATE_PLAY
+            ivPlay.setImageResource(R.drawable.ic_ugc_pause)
+        },50)
+
     }
 
 

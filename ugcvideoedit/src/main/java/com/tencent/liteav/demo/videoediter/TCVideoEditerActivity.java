@@ -169,6 +169,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
     private void startEffectActivity(int effectType) {
         Intent intent = new Intent(this, TCVideoEffectActivity.class);
         intent.putExtra(UGCKitConstants.KEY_FRAGMENT, effectType);
+        intent.putExtra(UGCKitConstants.VIDEO_PATH, mVideoPath);
         startActivityForResult(intent, UGCKitConstants.ACTIVITY_OTHER_REQUEST_CODE);
     }
 }

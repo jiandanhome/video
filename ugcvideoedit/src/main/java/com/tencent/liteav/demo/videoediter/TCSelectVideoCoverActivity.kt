@@ -182,7 +182,6 @@ class TCSelectVideoCoverActivity:AppCompatActivity() {
     private val videoPreviewListener=object : TXVideoEditer.TXVideoPreviewListener {
         override fun onPreviewProgress(time: Int) {
             currentTimeMs = time / 1000  //videoProgress:ms
-//            Log.i("sck220", "onPreviewProgress: ${currentTimeMs}")
             tvTime.text = DateTimeUtil.formattedTime((currentTimeMs * 1F / 1000).roundToInt().toLong())
             if (currentPlayState == PlayState.STATE_PLAY) {
                 val distance = (currentTimeMs * 1F / videoDuration) * allThumbWidth - currentScrolledX
@@ -207,7 +206,6 @@ class TCSelectVideoCoverActivity:AppCompatActivity() {
                 if (currentPlayState != PlayState.STATE_PLAY) {
                     val progress = currentScrolledX.toFloat() / allThumbWidth
                     val currentTimeMs = (videoDuration * progress).toInt()
-//                    Log.i("sck220", "previewAtTime: ${currentTimeMs}")
                     videoEditer?.previewAtTime(currentTimeMs.toLong())
                     currentPlayState = PlayState.STATE_PREVIEW_AT_TIME
                 }

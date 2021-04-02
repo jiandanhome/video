@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.UGCKitVideoEffect;
 import com.tencent.qcloud.ugckit.module.effect.IVideoEffectKit;
+import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK;
 
 
 public class TCVideoEffectActivity extends FragmentActivity {
@@ -32,12 +33,15 @@ public class TCVideoEffectActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        VideoEditerSDK.getInstance().setVideoPath(getIntent().getStringExtra(UGCKitConstants.VIDEO_PATH));
         setContentView(R.layout.ugcedit_activity_video_effect);
 
         mFragmentType = getIntent().getIntExtra(UGCKitConstants.KEY_FRAGMENT, 0);
 
         mUGCKitVideoEffect = (UGCKitVideoEffect) findViewById(R.id.video_effect_layout);
         mUGCKitVideoEffect.setEffectType(mFragmentType);
+
+
     }
 
     @Override

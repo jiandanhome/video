@@ -36,7 +36,7 @@
         android:padding="10dp"
         android:maxLength="15"
         android:textColorHint="#999"
-        android:hint="我的短视频1"
+        android:hint="请填写"
         android:layout_height="wrap_content">
     </EditText>
 
