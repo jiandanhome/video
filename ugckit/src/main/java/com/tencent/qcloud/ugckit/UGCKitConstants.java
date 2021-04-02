@@ -55,6 +55,7 @@ public class UGCKitConstants {
     public static final int ACTIVITY_REQUEST_CODE_EDIT_VIDEO= 200;
     public static final int ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY= 222;
     public static final int ACTIVITY_REQUEST_CODE_TO_JOIN_VIDEO= 223;
+    public static final int ACTIVITY_REQUEST_CODE_TO_CUT_VIDEO= 224;
 
     public static final String KEY_FRAGMENT = "fragment_type";
     public static final int TYPE_EDITER_BGM = 1;

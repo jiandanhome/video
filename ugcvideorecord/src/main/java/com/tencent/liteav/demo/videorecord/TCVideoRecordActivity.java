@@ -10,12 +10,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.eju.ugcvideojoin.UGCSelectVideoActivity;
+import com.tencent.liteav.demo.videoediter.TCVideoCutNewActivity;
 import com.tencent.qcloud.ugckit.custom.EjuVideoConfig;
 import com.tencent.qcloud.ugckit.utils.ToastUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.core.content.ContextCompat;
 
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -33,6 +36,7 @@ import com.tencent.qcloud.ugckit.module.record.UGCKitRecordConfig;
 import com.tencent.qcloud.ugckit.module.record.interfaces.IVideoRecordKit;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.ugc.TXRecordCommon;
+import com.tencent.ugc.TXVideoEditConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,6 +139,7 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
         mUGCKitVideoRecord.getRecordBottomLayout().setOnSelectVideoListener(new OnSelectVideoListener() {
             @Override
             public void toSelect() {
+//                UGCSelectVideoActivity.Companion.openForResult(TCVideoRecordActivity.this,UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY);
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setDataAndType(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "video/*");
                 startActivityForResult(intent,UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY);
@@ -245,17 +250,25 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
         if(resultCode==RESULT_OK){
             switch (requestCode){
                 case UGCKitConstants.ACTIVITY_REQUEST_CODE_SELECT_VIDEO_FROM_GALLERY:
+//                    String videoPath=data.getStringExtra(UGCKitConstants.VIDEO_PATH);
+//                    TCVideoCutNewActivity.Companion.open(this,videoPath,EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs(),
+//                            UGCKitConstants.ACTIVITY_REQUEST_CODE_TO_CUT_VIDEO);
                     if(data!=null&&data.getData()!=null){
                         String localVideoPath= PathUtils.getPath(this,data.getData());
                         long aLong=getVideoDuration(localVideoPath);
-                        if(aLong>=61*1000){
-                            ToastUtil.toastShortMessage("视频长度超过60s");
+                        if(aLong>=EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()+1000){
+                            ToastUtil.toastShortMessage("视频长度超过"+EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()/1000+"s");
                         }else{
                             UGCKitResult ugcKitResult=new UGCKitResult();
                             ugcKitResult.outputPath=localVideoPath;
                             startEditActivity(ugcKitResult);
                         }
                     }
+                    break;
+                case UGCKitConstants.ACTIVITY_REQUEST_CODE_TO_CUT_VIDEO:
+                    UGCKitResult ugcKitResult=new UGCKitResult();
+                    ugcKitResult.outputPath=data.getStringExtra(UGCKitConstants.VIDEO_PATH);;
+                    startEditActivity(ugcKitResult);
                     break;
                 case UGCKitConstants.ACTIVITY_REQUEST_CODE_EDIT_VIDEO:
                     if(data!=null){

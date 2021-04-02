@@ -2,41 +2,65 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/clContent"
     android:layout_width="match_parent"
-    android:background="@color/ugckit_white"
+    android:background="@color/ugckit_black"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
-        android:id="@+id/ibBack"
+    <TextView
+        android:id="@+id/tvBack"
         android:padding="15dp"
-        android:src="@drawable/ic_ugckit_back_black"
-        android:background="@null"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"
+        android:text="取消"
+        android:textColor="@color/ugckit_white"
+        android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    </ImageButton>
+    </TextView>
 
     <TextView
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/ibBack"
-        app:layout_constraintBottom_toBottomOf="@id/ibBack"
+        app:layout_constraintTop_toTopOf="@id/tvBack"
+        app:layout_constraintBottom_toBottomOf="@id/tvBack"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="拼接视频"
         android:textSize="18sp"
-        android:textColor="#333"
+        android:textColor="@color/ugckit_white"
         android:layout_height="wrap_content">
     </TextView>
 
-    <FrameLayout
-        android:id="@+id/flVideo"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/ibBack"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@android:color/black"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl"
+        android:layout_width="wrap_content"
+        app:layout_constraintGuide_percent="0.23"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+    </androidx.constraintlayout.widget.Guideline>
+
+
+    <com.tencent.qcloud.ugckit.custom.CircleProgressView
+        android:id="@+id/cProgress"
+        app:layout_constraintTop_toBottomOf="@id/gl"
+        app:layout_constraintWidth_percent="0.28"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="0dp"
         android:layout_height="0dp">
-    </FrameLayout>
+    </com.tencent.qcloud.ugckit.custom.CircleProgressView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="视频合成中"
+        app:layout_constraintTop_toBottomOf="@id/cProgress"
+        app:layout_constraintLeft_toLeftOf="@id/cProgress"
+        app:layout_constraintRight_toRightOf="@id/cProgress"
+        android:layout_marginTop="15dp"
+        android:textSize="14sp"
+        android:textColor="@color/ugckit_white"
+        android:layout_height="wrap_content">
+    </TextView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,7 @@ dependencies {
 
     implementation project(':ugckit')
     implementation project(':ugcvideoedit')
+    implementation project(':ugcvideojoin')
 
     implementation rootProject.ext.dependencies["liteav"]
     implementation rootProject.ext.dependencies["glide"]
