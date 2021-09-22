@@ -13,7 +13,6 @@ class UgcVideoDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ugc_video_demo)
-        val a= 20
     }
 
     fun record(view: View){

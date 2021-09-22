@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.tencent.liteav.demo.videoediter.TCVideoEditerActivity;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
@@ -260,13 +261,17 @@ public class TCVideoRecordActivity extends FragmentActivity implements ActivityC
                     }else{
                         if(data!=null&&data.getData()!=null){
                             String localVideoPath= PathUtils.getPath(this,data.getData());
-                            long aLong=getVideoDuration(localVideoPath);
-                            if(aLong>=EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()+1000){
-                                ToastUtil.toastShortMessage("视频长度超过"+EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()/1000+"s");
+                            if(TextUtils.isEmpty(localVideoPath)){
+                                Toast.makeText(TCVideoRecordActivity.this, "读取本地视频失败", Toast.LENGTH_SHORT).show();
                             }else{
-                                UGCKitResult ugcKitResult=new UGCKitResult();
-                                ugcKitResult.outputPath=localVideoPath;
-                                startEditActivity(ugcKitResult);
+                                long aLong=getVideoDuration(localVideoPath);
+                                if(aLong>=EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()+1000){
+                                    ToastUtil.toastShortMessage("视频长度超过"+EjuVideoConfig.INSTANCE.getRecordMaxTimeIsMs()/1000+"s");
+                                }else{
+                                    UGCKitResult ugcKitResult=new UGCKitResult();
+                                    ugcKitResult.outputPath=localVideoPath;
+                                    startEditActivity(ugcKitResult);
+                                }
                             }
                         }
                     }
